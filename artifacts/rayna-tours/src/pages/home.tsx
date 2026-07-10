@@ -1,13 +1,13 @@
 import React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
-import { Link } from 'wouter'
-import { motion } from 'framer-motion'
+import { Link, useLocation } from 'wouter'
+import { motion, AnimatePresence } from 'framer-motion'
 import Layout from '@/components/layout'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Search, MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, Clock, CheckCircle, Mail } from 'lucide-react'
+import { MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, Clock, CheckCircle, Mail, ChevronDown, Minus, Plus } from 'lucide-react'
 import { useListFeaturedPackages, useListActivities, useListTestimonials } from '@workspace/api-client-react'
 
 // Local imports for generated images
@@ -52,9 +52,49 @@ const slides = [
   { id: 3, image: heroDhow, title: 'Sail into the starlight', subtitle: 'Luxury Dhow Cruises' },
 ]
 
+const DESTINATIONS = [
+  { label: 'Desert Safari', slug: 'desert-safari' },
+  { label: 'Water Activities', slug: 'water-activities' },
+  { label: 'Skydiving', slug: 'skydiving' },
+  { label: 'Burj Khalifa', slug: 'burj-khalifa' },
+  { label: 'Dhow Cruise', slug: 'dhow-cruise' },
+  { label: 'City Tour', slug: 'city-tour' },
+  { label: 'Theme Parks', slug: 'theme-parks' },
+  { label: 'Car Rental', slug: 'car-rental' },
+  { label: 'All Packages', slug: '' },
+]
+
 export default function Home() {
+  const [, navigate] = useLocation()
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [selectedIndex, setSelectedIndex] = React.useState(0)
+
+  // Search bar state
+  const [destination, setDestination] = React.useState('')
+  const [destinationLabel, setDestinationLabel] = React.useState('')
+  const [date, setDate] = React.useState('')
+  const [guests, setGuests] = React.useState(2)
+  const [showDestDrop, setShowDestDrop] = React.useState(false)
+  const destRef = React.useRef<HTMLDivElement>(null)
+
+  // Close dropdown on outside click
+  React.useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (destRef.current && !destRef.current.contains(e.target as Node)) {
+        setShowDestDrop(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const handleSearch = () => {
+    if (destination) {
+      navigate(`/${destination}`)
+    } else {
+      navigate('/dubai-holidays')
+    }
+  }
 
   const { data: featuredPackages, isLoading: loadingPackages } = useListFeaturedPackages()
   const { data: activities, isLoading: loadingActivities } = useListActivities()
@@ -64,12 +104,7 @@ export default function Home() {
     if (!emblaApi) return
     const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
     emblaApi.on('select', onSelect)
-    
-    // Autoplay
-    const interval = setInterval(() => {
-      emblaApi.scrollNext()
-    }, 5000)
-    
+    const interval = setInterval(() => emblaApi.scrollNext(), 5000)
     return () => {
       emblaApi.off('select', onSelect)
       clearInterval(interval)
@@ -143,29 +178,98 @@ export default function Home() {
         <div className="absolute -bottom-2 left-0 right-0 z-20 hidden md:block">
           <div className="container mx-auto px-4 max-w-5xl">
             <div className="bg-white rounded-xl shadow-xl p-4 grid grid-cols-4 gap-4 items-center">
-              <div className="flex items-center gap-3 px-4 border-r border-border">
-                <MapPin className="text-primary w-5 h-5" />
-                <div className="flex-1">
-                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Destination</p>
-                  <input type="text" placeholder="Where to?" className="w-full text-sm font-medium outline-none placeholder:text-foreground/40" />
-                </div>
+
+              {/* Destination */}
+              <div className="relative" ref={destRef}>
+                <button
+                  type="button"
+                  onClick={() => setShowDestDrop(v => !v)}
+                  className="flex items-center gap-3 px-4 w-full border-r border-border text-left"
+                >
+                  <MapPin className="text-primary w-5 h-5 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Destination</p>
+                    <p className={`text-sm font-medium truncate ${destinationLabel ? 'text-foreground' : 'text-foreground/40'}`}>
+                      {destinationLabel || 'Where to?'}
+                    </p>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${showDestDrop ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {showDestDrop && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full left-0 mt-2 w-56 bg-white border border-border rounded-lg shadow-xl z-50 overflow-hidden"
+                    >
+                      {DESTINATIONS.map(d => (
+                        <li key={d.slug}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setDestination(d.slug)
+                              setDestinationLabel(d.label)
+                              setShowDestDrop(false)
+                            }}
+                            className={`w-full text-left px-4 py-2.5 text-sm hover:bg-primary/10 hover:text-primary transition-colors ${destination === d.slug ? 'bg-primary/10 text-primary font-medium' : ''}`}
+                          >
+                            {d.label}
+                          </button>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </AnimatePresence>
               </div>
+
+              {/* Date */}
               <div className="flex items-center gap-3 px-4 border-r border-border">
-                <Calendar className="text-primary w-5 h-5" />
+                <Calendar className="text-primary w-5 h-5 shrink-0" />
                 <div className="flex-1">
                   <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Date</p>
-                  <input type="text" placeholder="Select dates" className="w-full text-sm font-medium outline-none placeholder:text-foreground/40" />
+                  <input
+                    type="date"
+                    value={date}
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={e => setDate(e.target.value)}
+                    className="w-full text-sm font-medium outline-none bg-transparent text-foreground [color-scheme:light] cursor-pointer"
+                  />
                 </div>
               </div>
+
+              {/* Guests */}
               <div className="flex items-center gap-3 px-4">
-                <Users className="text-primary w-5 h-5" />
+                <Users className="text-primary w-5 h-5 shrink-0" />
                 <div className="flex-1">
                   <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">Guests</p>
-                  <input type="text" placeholder="1 Room, 2 Guests" className="w-full text-sm font-medium outline-none placeholder:text-foreground/40" />
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <button
+                      type="button"
+                      onClick={() => setGuests(g => Math.max(1, g - 1))}
+                      className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </button>
+                    <span className="text-sm font-medium w-6 text-center">{guests}</span>
+                    <button
+                      type="button"
+                      onClick={() => setGuests(g => Math.min(20, g + 1))}
+                      className="w-6 h-6 rounded-full border border-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </button>
+                    <span className="text-xs text-muted-foreground">Guest{guests !== 1 ? 's' : ''}</span>
+                  </div>
                 </div>
               </div>
+
+              {/* Search Button */}
               <div>
-                <Button className="w-full h-12">Search Now</Button>
+                <Button className="w-full h-12 text-base" onClick={handleSearch}>
+                  Search Now
+                </Button>
               </div>
             </div>
           </div>
