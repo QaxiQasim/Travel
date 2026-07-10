@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Rayna Tours — Dubai Tourism"
+version = "1.0.0"
+id = "artifacts/rayna-tours"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19883
+
+[services.development]
+run = "pnpm --filter @workspace/rayna-tours run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rayna-tours", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rayna-tours/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19883"
+BASE_PATH = "/"

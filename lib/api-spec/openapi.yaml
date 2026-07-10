@@ -3,13 +3,20 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Rayna Tours Dubai - API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: packages
+    description: Tour packages and holiday deals
+  - name: activities
+    description: Individual Dubai activities
+  - name: enquiries
+    description: Booking and enquiry submissions
+
 paths:
   /healthz:
     get:
@@ -24,6 +31,155 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /packages:
+    get:
+      operationId: listPackages
+      tags: [packages]
+      summary: List all tour packages
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TourPackage"
+
+  /packages/featured:
+    get:
+      operationId: listFeaturedPackages
+      tags: [packages]
+      summary: Get featured packages for the home page
+      responses:
+        "200":
+          description: Featured packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TourPackage"
+
+  /packages/{slug}:
+    get:
+      operationId: getPackage
+      tags: [packages]
+      summary: Get a specific package by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TourPackage"
+        "404":
+          description: Package not found
+
+  /activities:
+    get:
+      operationId: listActivities
+      tags: [activities]
+      summary: List all activities
+      responses:
+        "200":
+          description: List of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /activities/{slug}:
+    get:
+      operationId: getActivity
+      tags: [activities]
+      summary: Get an activity by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Activity details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Activity"
+        "404":
+          description: Activity not found
+
+  /enquiries:
+    post:
+      operationId: createEnquiry
+      tags: [enquiries]
+      summary: Submit a booking enquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnquiryInput"
+      responses:
+        "201":
+          description: Enquiry submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enquiry"
+        "400":
+          description: Invalid input
+
+    get:
+      operationId: listEnquiries
+      tags: [enquiries]
+      summary: List all enquiries
+      responses:
+        "200":
+          description: List of enquiries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Enquiry"
+
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [packages]
+      summary: Get customer testimonials
+      responses:
+        "200":
+          description: List of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +190,186 @@ components:
       required:
         - status
 
+    TourPackage:
+      type: object
+      required: [id, slug, title, category, priceAed, nights, days, imageUrl]
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+          description: "e.g. dubai-city, holiday, desert-safari"
+        shortDescription:
+          type: string
+        description:
+          type: string
+        priceAed:
+          type: integer
+        nights:
+          type: integer
+        days:
+          type: integer
+        imageUrl:
+          type: string
+        galleryImages:
+          type: array
+          items:
+            type: string
+        inclusions:
+          type: array
+          items:
+            type: string
+        exclusions:
+          type: array
+          items:
+            type: string
+        highlights:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+
+    Activity:
+      type: object
+      required: [id, slug, title, category, priceAed, imageUrl, duration]
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        shortDescription:
+          type: string
+        description:
+          type: string
+        priceAed:
+          type: integer
+        duration:
+          type: string
+        imageUrl:
+          type: string
+        galleryImages:
+          type: array
+          items:
+            type: string
+        inclusions:
+          type: array
+          items:
+            type: string
+        options:
+          type: array
+          items:
+            $ref: "#/components/schemas/ActivityOption"
+        faqs:
+          type: array
+          items:
+            $ref: "#/components/schemas/FAQ"
+        relatedActivitySlugs:
+          type: array
+          items:
+            type: string
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+
+    ActivityOption:
+      type: object
+      required: [name, priceAed]
+      properties:
+        name:
+          type: string
+        priceAed:
+          type: integer
+        description:
+          type: string
+        inclusions:
+          type: array
+          items:
+            type: string
+
+    FAQ:
+      type: object
+      required: [question, answer]
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+
+    EnquiryInput:
+      type: object
+      required: [name, email, phone, activityOrPackage, travelDate, guests]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+        phone:
+          type: string
+        activityOrPackage:
+          type: string
+        travelDate:
+          type: string
+        guests:
+          type: integer
+          minimum: 1
+        message:
+          type: ["string", "null"]
+
+    Enquiry:
+      type: object
+      required: [id, name, email, phone, activityOrPackage, travelDate, guests, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        activityOrPackage:
+          type: string
+        travelDate:
+          type: string
+        guests:
+          type: integer
+        message:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    Testimonial:
+      type: object
+      required: [id, name, location, rating, review]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        rating:
+          type: integer
+        review:
+          type: string
+        avatarUrl:
+          type: ["string", "null"]
