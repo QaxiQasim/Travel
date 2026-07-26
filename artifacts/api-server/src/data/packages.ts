@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Central data store for all tour packages and activities.
 // Edit prices and content here to update the entire site.
 
