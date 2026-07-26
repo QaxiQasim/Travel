@@ -8,6 +8,9 @@ import ActivityPage from '@/pages/activity-page';
 import ContactPage from '@/pages/contact';
 import GalleryPage from '@/pages/gallery';
 import AboutPage from '@/pages/about';
+import ActivitiesPage from '@/pages/activities';
+import ChauffeurPage from '@/pages/chauffeur';
+import CarDetailsPage from '@/pages/car-details';
 import NotFound from '@/pages/not-found';
 
 const queryClient = new QueryClient();
@@ -17,6 +20,9 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dubai-holidays" component={DubaiHolidays} />
+      <Route path="/activities" component={ActivitiesPage} />
+      <Route path="/chauffeur-services" component={ChauffeurPage} />
+      <Route path="/chauffeur-services/:slug" component={CarDetailsPage} />
       <Route path="/about" component={AboutPage} />
       <Route path="/contact" component={ContactPage} />
       <Route path="/gallery" component={GalleryPage} />

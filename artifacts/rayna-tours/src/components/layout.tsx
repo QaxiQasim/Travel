@@ -23,20 +23,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     window.scrollTo(0, 0)
   }, [location])
 
-  const navLinks = [
+  const navLinks: { name: string; href: string; isDropdown?: boolean }[] = [
     { name: 'Home', href: '/' },
     { name: 'Dubai Holidays', href: '/dubai-holidays' },
-    { name: 'Activities', href: '#', isDropdown: true },
+    { name: 'Activities', href: '/activities' },
+    { name: 'Chauffeur Services', href: '/chauffeur-services' },
+    { name: 'Car Rental', href: '/car-rental' },
     { name: 'About Us', href: '/about' },
     { name: 'Gallery', href: '/gallery' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact Us', href: '/contact' },
   ]
 
   const activityLinks = [
     { name: 'Desert Safari', href: '/desert-safari' },
     { name: 'Water Activities', href: '/water-activities' },
     { name: 'Skydiving', href: '/skydiving' },
-    { name: 'Car Rental', href: '/car-rental' },
     { name: 'City Tour', href: '/city-tour' },
     { name: 'Burj Khalifa', href: '/burj-khalifa' },
     { name: 'Dhow Cruise', href: '/dhow-cruise' },
@@ -45,40 +46,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-background font-sans text-foreground">
-      {/* Top Slim Bar */}
-      <div className="bg-foreground text-white py-2 text-xs">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <a href="tel:+97140000000" className="flex items-center gap-2 hover:text-primary transition-colors">
-              <Phone className="w-3 h-3" />
-              <span>+971-4-XXX-XXXX</span>
-            </a>
-            <a href="mailto:info@raynatours.com" className="flex items-center gap-2 hover:text-primary transition-colors hidden sm:flex">
-              <Mail className="w-3 h-3" />
-              <span>info@raynatours.com</span>
-            </a>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="https://wa.me/97140000000" className="flex items-center gap-1.5 hover:text-primary transition-colors">
-              <SiWhatsapp className="w-3.5 h-3.5" />
-              <span>WhatsApp Us</span>
-            </a>
-          </div>
-        </div>
-      </div>
 
       {/* Main Header */}
       <header
         className={cn(
-          "sticky top-0 z-50 w-full transition-all duration-300 bg-background/95 backdrop-blur-md border-b",
-          isScrolled ? "py-3 shadow-md border-transparent" : "py-5 border-transparent"
+          "fixed top-0 z-50 w-full transition-all duration-500",
+          isScrolled 
+            ? "bg-black py-4 shadow-lg border-b border-white/10" 
+            : "bg-gradient-to-b from-black via-black/60 to-transparent py-6"
         )}
       >
         <div className="container mx-auto px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="font-serif text-3xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-              Rayna<span className="text-primary">Tours</span>
-            </span>
+            <img src="/logo.png" alt="DONNVAY" className="h-12 w-auto object-contain rounded-sm transition-transform duration-300 group-hover:scale-105" />
           </Link>
 
           {/* Desktop Nav */}
@@ -88,14 +68,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {link.isDropdown ? (
                   <span className={cn(
                     "text-sm font-medium tracking-wide hover:text-primary cursor-pointer py-2 transition-colors",
-                    activityLinks.some(a => a.href === location) ? "text-primary" : "text-foreground/80"
+                    activityLinks.some(a => a.href === location) ? "text-primary" : "text-white/80"
                   )}>
                     {link.name}
                   </span>
                 ) : (
                   <Link href={link.href} className={cn(
                     "text-sm font-medium tracking-wide hover:text-primary transition-colors py-2",
-                    location === link.href ? "text-primary border-b-2 border-primary" : "text-foreground/80"
+                    location === link.href ? "text-primary border-b-2 border-primary" : "text-white/80"
                   )}>
                     {link.name}
                   </Link>
@@ -103,13 +83,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                 {/* Dropdown Menu */}
                 {link.isDropdown && (
-                  <div className="absolute top-full left-0 mt-2 w-56 bg-background border border-border shadow-xl rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
+                  <div className="absolute top-full left-0 mt-2 w-56 bg-black border border-white/10 shadow-xl rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0">
                     <div className="py-2">
                       {activityLinks.map((activity) => (
                         <Link
                           key={activity.name}
                           href={activity.href}
-                          className="block px-4 py-2 text-sm text-foreground/80 hover:bg-muted hover:text-primary transition-colors"
+                          className="block px-4 py-2 text-sm text-white/80 hover:bg-white/10 hover:text-primary transition-colors"
                         >
                           {activity.name}
                         </Link>
@@ -123,7 +103,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2 text-foreground"
+            className="lg:hidden p-2 text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             data-testid="button-mobile-menu"
           >
@@ -134,19 +114,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40 bg-background pt-32 px-6 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 z-40 bg-black pt-32 px-6 overflow-y-auto">
           <nav className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <div key={link.name}>
                 {link.isDropdown ? (
                   <div className="flex flex-col gap-4">
-                    <span className="text-xl font-serif text-foreground/50">{link.name}</span>
-                    <div className="pl-4 border-l border-border flex flex-col gap-4">
+                    <span className="text-xl font-serif text-white/50">{link.name}</span>
+                    <div className="pl-4 border-l border-white/20 flex flex-col gap-4">
                       {activityLinks.map((activity) => (
                         <Link
                           key={activity.name}
                           href={activity.href}
-                          className="text-lg text-foreground hover:text-primary transition-colors"
+                          className="text-lg text-white hover:text-primary transition-colors"
                         >
                           {activity.name}
                         </Link>
@@ -158,7 +138,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     href={link.href}
                     className={cn(
                       "text-xl font-serif hover:text-primary transition-colors",
-                      location === link.href ? "text-primary" : "text-foreground"
+                      location === link.href ? "text-primary" : "text-white"
                     )}
                   >
                     {link.name}
@@ -176,13 +156,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-foreground text-white pt-20 pb-10 hairline-top">
+      <footer className="bg-black text-white pt-20 pb-10 hairline-top">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
-              <span className="font-serif text-3xl font-bold tracking-tight text-white mb-6 block">
-                Rayna<span className="text-primary">Tours</span>
-              </span>
+              <img src="/logo.png" alt="DONNVAY" className="h-12 w-auto object-contain mb-6" />
               <p className="text-white/70 text-sm leading-relaxed mb-6">
                 Dubai's trusted travel authority. We curate premium desert adventures, skyline experiences, and unforgettable Arabian nights with white-glove service.
               </p>
@@ -219,7 +197,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </li>
                 <li className="flex items-start gap-3 text-white/70 text-sm">
                   <Mail className="w-5 h-5 text-primary shrink-0" />
-                  <span>info@raynatours.com</span>
+                  <span>info@donnvay.com</span>
                 </li>
                 <li className="flex items-start gap-3 text-white/70 text-sm">
                   <svg className="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -234,7 +212,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} Rayna Tours. All rights reserved.
+              © {new Date().getFullYear()} DONNVAY. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="text-white/50 hover:text-primary transition-colors text-sm">Privacy Policy</a>

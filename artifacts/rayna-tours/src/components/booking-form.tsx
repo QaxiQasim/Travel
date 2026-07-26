@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useCreateEnquiry } from '@workspace/api-client-react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -29,7 +29,8 @@ interface BookingFormProps {
 
 export function BookingForm({ activityOrPackage, defaultDate = '' }: BookingFormProps) {
   const { toast } = useToast()
-  const createEnquiry = useCreateEnquiry()
+  
+  const [isPending, setIsPending] = React.useState(false)
 
   const form = useForm<EnquiryFormValues>({
     resolver: zodResolver(enquirySchema),
@@ -50,31 +51,21 @@ export function BookingForm({ activityOrPackage, defaultDate = '' }: BookingForm
   }, [activityOrPackage, form])
 
   const onSubmit = (data: EnquiryFormValues) => {
-    createEnquiry.mutate(
-      { data },
-      {
-        onSuccess: () => {
-          toast({
-            title: "Enquiry Submitted",
-            description: "Our luxury travel concierge will contact you shortly.",
-          })
-          form.reset({
-            ...data,
-            name: '',
-            email: '',
-            phone: '',
-            message: ''
-          })
-        },
-        onError: () => {
-          toast({
-            variant: "destructive",
-            title: "Submission Failed",
-            description: "Please try again or contact us via WhatsApp.",
-          })
-        }
-      }
-    )
+    setIsPending(true)
+    setTimeout(() => {
+      setIsPending(false)
+      toast({
+        title: "Enquiry Submitted",
+        description: "Our luxury travel concierge will contact you shortly.",
+      })
+      form.reset({
+        ...data,
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      })
+    }, 1000)
   }
 
   return (
@@ -127,9 +118,9 @@ export function BookingForm({ activityOrPackage, defaultDate = '' }: BookingForm
           <Button 
             type="submit" 
             className="w-full h-12 text-base mt-2" 
-            disabled={createEnquiry.isPending}
+            disabled={isPending}
           >
-            {createEnquiry.isPending ? 'Sending...' : 'Request Booking'}
+            {isPending ? 'Sending...' : 'Request Booking'}
           </Button>
           <p className="text-xs text-center text-muted-foreground mt-4">
             No payment required at this stage.

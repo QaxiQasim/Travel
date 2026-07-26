@@ -9,11 +9,11 @@ export default function AboutPage() {
   return (
     <Layout>
       <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center bg-foreground overflow-hidden">
-        <img src={aboutHero} alt="About Rayna Tours" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+        <img src={aboutHero} alt="About DONNVAY" className="absolute inset-0 w-full h-full object-cover opacity-50" />
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto mt-16">
           <FadeIn>
             <p className="text-primary font-medium tracking-widest uppercase mb-4 text-sm">Our Story</p>
-            <h1 className="text-4xl md:text-6xl font-serif text-white font-medium mb-6">The Rayna Legacy</h1>
+            <h1 className="text-4xl md:text-6xl font-serif text-white font-medium mb-6">The DONNVAY Legacy</h1>
           </FadeIn>
         </div>
       </div>
@@ -24,7 +24,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-serif font-medium mb-6 leading-tight">Elevating Dubai Tourism Since 2009</h2>
             <div className="prose prose-lg text-muted-foreground prose-p:leading-relaxed">
               <p>
-                Rayna Tours began with a simple vision: to showcase the true grandeur of Dubai through the eyes of locals who love it. What started as a boutique concierge service has grown into the UAE's most trusted premium destination management company.
+                DONNVAY began with a simple vision: to showcase the true grandeur of Dubai through the eyes of locals who love it. What started as a boutique concierge service has grown into the UAE's most trusted premium destination management company.
               </p>
               <p>
                 We do not deal in generic itineraries. Every package we design, every desert safari we operate, and every Dhow cruise we sail is meticulously crafted to deliver the classic luxury that Dubai is famous for.
@@ -49,7 +49,7 @@ export default function AboutPage() {
       <div className="bg-secondary py-24">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">The Rayna Standard</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">The DONNVAY Standard</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">We hold ourselves to the highest standards of hospitality.</p>
           </div>
 

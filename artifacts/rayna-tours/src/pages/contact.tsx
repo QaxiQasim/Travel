@@ -29,7 +29,7 @@ export default function ContactPage() {
     <Layout>
       {/* Slim Header Banner */}
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center bg-foreground overflow-hidden">
-        <img src={contactBg} alt="Contact Rayna Tours" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+        <img src={contactBg} alt="Contact DONNVAY" className="absolute inset-0 w-full h-full object-cover opacity-40" />
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto mt-16">
           <FadeIn>
             <h1 className="text-4xl md:text-5xl font-serif text-white font-medium mb-4">Contact Us</h1>
@@ -80,8 +80,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Email</h4>
-                    <p className="text-sm text-muted-foreground mb-1">info@raynatours.com</p>
-                    <p className="text-sm text-muted-foreground">bookings@raynatours.com</p>
+                    <p className="text-sm text-muted-foreground mb-1">info@donnvay.com</p>
+                    <p className="text-sm text-muted-foreground">bookings@donnvay.com</p>
                   </div>
                 </div>
 
