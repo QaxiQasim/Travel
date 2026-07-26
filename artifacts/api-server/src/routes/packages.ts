@@ -8,7 +8,7 @@ import {
 const router: IRouter = Router();
 
 // GET /packages — list all packages, optionally filtered by category or featured
-router.get("/packages", async (req, res): Promise<void> => {
+router.get("/packages", async (req: any, res: any): Promise<void> => {
   const { category, featured } = req.query;
   let result = [...packages];
 
@@ -24,13 +24,13 @@ router.get("/packages", async (req, res): Promise<void> => {
 });
 
 // GET /packages/featured — featured packages for home page
-router.get("/packages/featured", async (_req, res): Promise<void> => {
+router.get("/packages/featured", async (_req: any, res: any): Promise<void> => {
   const featured = packages.filter((p) => p.isFeatured);
   res.json(featured);
 });
 
 // GET /packages/:slug — get a specific package
-router.get("/packages/:slug", async (req, res): Promise<void> => {
+router.get("/packages/:slug", async (req: any, res: any): Promise<void> => {
   const { slug } = req.params;
   const pkg = packages.find((p) => p.slug === slug);
   if (!pkg) {
@@ -41,12 +41,12 @@ router.get("/packages/:slug", async (req, res): Promise<void> => {
 });
 
 // GET /activities — list all activities
-router.get("/activities", async (_req, res): Promise<void> => {
+router.get("/activities", async (_req: any, res: any): Promise<void> => {
   res.json(activities);
 });
 
 // GET /activities/:slug — get a specific activity
-router.get("/activities/:slug", async (req, res): Promise<void> => {
+router.get("/activities/:slug", async (req: any, res: any): Promise<void> => {
   const { slug } = req.params;
   const activity = activities.find((a) => a.slug === slug);
   if (!activity) {
@@ -57,7 +57,7 @@ router.get("/activities/:slug", async (req, res): Promise<void> => {
 });
 
 // GET /testimonials — get customer testimonials
-router.get("/testimonials", async (_req, res): Promise<void> => {
+router.get("/testimonials", async (_req: any, res: any): Promise<void> => {
   res.json(testimonials);
 });
 
