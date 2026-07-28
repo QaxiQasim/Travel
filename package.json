@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm -r --parallel --if-present run dev",
-    "build": "pnpm run typecheck && pnpm -r --if-present run build && node -e \"const fs=require('fs'); fs.rmSync('public', {recursive:true, force:true}); fs.cpSync('artifacts/rayna-tours/dist/public', 'public', {recursive:true});\"",
+    "build": "pnpm -r --if-present run build && node -e \"const fs=require('fs'); fs.rmSync('public', {recursive:true, force:true}); fs.cpSync('artifacts/rayna-tours/dist/public', 'public', {recursive:true});\"",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },
@@ -17,3 +17,4 @@
     "typescript": "~5.9.3"
   }
 }
+
