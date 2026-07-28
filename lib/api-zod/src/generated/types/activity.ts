@@ -5,8 +5,8 @@
  * Rayna Tours Dubai - API specification
  * OpenAPI spec version: 0.1.0
  */
-import type { ActivityOption } from './activityOption';
-import type { Faq } from './faq';
+import type { ActivityOption } from './activityOption.js';
+import type { Faq } from './faq.js';
 
 export interface Activity {
   id: number;

@@ -6,12 +6,12 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export * from './activity';
-export * from './activityOption';
-export * from './enquiry';
-export * from './enquiryInput';
-export * from './faq';
-export * from './healthStatus';
-export * from './listPackagesParams';
-export * from './testimonial';
-export * from './tourPackage';
+export * from './activity.js';
+export * from './activityOption.js';
+export * from './enquiry.js';
+export * from './enquiryInput.js';
+export * from './faq.js';
+export * from './healthStatus.js';
+export * from './listPackagesParams.js';
+export * from './testimonial.js';
+export * from './tourPackage.js';
