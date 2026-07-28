@@ -1,16 +1,1 @@
-{
-  "installCommand": "pnpm install --no-frozen-lockfile",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "public"
-      }
-    }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ]
-}
+{"buildCommand": "pnpm run build", "installCommand": "pnpm install --no-frozen-lockfile", "outputDirectory": "public", "routes": [{"handle": "filesystem"}, {"src": "/(.*)", "dest": "/index.html"}]}
