@@ -69,8 +69,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Phone</h4>
-                    <p className="text-sm text-muted-foreground mb-1">+971-4-XXX-XXXX</p>
-                    <p className="text-sm text-muted-foreground">+971-5X-XXX-XXXX (WhatsApp)</p>
+                    <p className="text-sm text-muted-foreground mb-1">+971 52 420 4409</p>
+                    <p className="text-sm text-muted-foreground">+971 52 420 4409 (WhatsApp)</p>
                   </div>
                 </div>
 

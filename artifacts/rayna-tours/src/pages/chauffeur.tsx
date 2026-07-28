@@ -284,7 +284,7 @@ export default function ChauffeurPage() {
                           variant="outline" 
                           onClick={() => {
                             const message = `Hello, I am interested in booking the ${car.name} for AED ${displayPrice}. Can you provide more details?`;
-                            window.open(`https://wa.me/971501234567?text=${encodeURIComponent(message)}`, '_blank');
+                            window.open(`https://wa.me/971524204409?text=${encodeURIComponent(message)}`, '_blank');
                           }}
                           className="w-full rounded-md border-green-500 text-green-600 hover:bg-green-50 uppercase tracking-widest text-sm font-semibold h-12 transition-all duration-300 flex items-center gap-2"
                         >

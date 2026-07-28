@@ -224,7 +224,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/97140000000"
+        href="https://wa.me/971524204409"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] hover:scale-110 transition-all duration-300 group"

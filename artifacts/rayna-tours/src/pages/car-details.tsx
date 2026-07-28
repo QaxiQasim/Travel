@@ -59,7 +59,7 @@ export default function CarDetailsPage() {
     } else {
       message += ` Price: AED ${displayPrice}.`;
     }
-    window.open(`https://wa.me/971501234567?text=${encodeURIComponent(message)}`, '_blank')
+    window.open(`https://wa.me/971524204409?text=${encodeURIComponent(message)}`, '_blank')
   }
 
   const features = ["Leather Seats", "Chauffeur", "Bottled Water", "Free WiFi"];
