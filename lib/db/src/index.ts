@@ -15,4 +15,4 @@ export const pool = process.env.DATABASE_URL
   : null;
 export const db = pool ? drizzle(pool, { schema }) : null as any;
 
-export * from "./schema.js";
+export * from "./schema/index.js";
