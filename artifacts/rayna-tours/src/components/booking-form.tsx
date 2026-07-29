@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/hooks/use-toast'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 const enquirySchema = z.object({
@@ -25,9 +26,10 @@ type EnquiryFormValues = z.infer<typeof enquirySchema>
 interface BookingFormProps {
   activityOrPackage: string;
   defaultDate?: string;
+  packageOptions?: { name: string, priceAed?: number }[];
 }
 
-export function BookingForm({ activityOrPackage, defaultDate = '' }: BookingFormProps) {
+export function BookingForm({ activityOrPackage, defaultDate = '', packageOptions }: BookingFormProps) {
   const { toast } = useToast()
   
   const [isPending, setIsPending] = React.useState(false)
@@ -78,6 +80,29 @@ export function BookingForm({ activityOrPackage, defaultDate = '' }: BookingForm
       </CardHeader>
       <CardContent className="pt-6">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          
+          {packageOptions && packageOptions.length > 0 && (
+            <div className="space-y-2">
+              <Label htmlFor="packageSelect">Package Options</Label>
+              <Select
+                value={form.watch('activityOrPackage')}
+                onValueChange={(val) => form.setValue('activityOrPackage', val)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a package" />
+                </SelectTrigger>
+                <SelectContent>
+                  {packageOptions.map((opt, i) => (
+                    <SelectItem key={i} value={`${activityOrPackage.split(' - ')[0]} - ${opt.name}`}>
+                      {opt.name} {opt.priceAed ? `(AED ${opt.priceAed})` : ''}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {form.formState.errors.activityOrPackage && <p className="text-sm text-destructive">{form.formState.errors.activityOrPackage.message}</p>}
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
             <Input id="name" placeholder="John Doe" {...form.register('name')} />

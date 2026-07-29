@@ -397,7 +397,10 @@ export default function ActivityPage() {
           {/* Sidebar */}
           <div className="w-full lg:w-[400px]" id="booking-section">
             <div className="sticky top-24 space-y-6">
-              <BookingForm activityOrPackage={selectedPackageName || displayData.title} />
+              <BookingForm 
+                activityOrPackage={selectedPackageName || (displayData.options && displayData.options.length > 0 ? `${displayData.title} - ${displayData.options[0].name}` : displayData.title)} 
+                packageOptions={displayData.options}
+              />
               
               <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
                 <h3 className="font-serif text-lg font-medium mb-4 pb-4 border-b border-border">Why choose DONNVAY?</h3>
