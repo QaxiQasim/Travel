@@ -318,16 +318,44 @@ export default function ActivityPage() {
                             <span className="text-sm text-muted-foreground block">Price</span>
                             <span className="text-2xl font-medium">AED {opt.priceAed} <span className="text-sm font-normal text-muted-foreground">per person</span></span>
                           </div>
-                          <p className="text-muted-foreground">{opt.description}</p>
+                          <p className="text-muted-foreground">{opt.longDescription || opt.description}</p>
                           
+                          {opt.highlights && opt.highlights.length > 0 && (
+                            <div>
+                              <h4 className="font-medium text-lg mb-3">Highlights</h4>
+                              <ul className="space-y-2">
+                                {opt.highlights.map((hlt: string, idx: number) => (
+                                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-2" />
+                                    <span>{hlt}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
                           {opt.inclusions && opt.inclusions.length > 0 && (
                             <div>
                               <h4 className="font-medium text-lg mb-3">Inclusions</h4>
                               <ul className="space-y-2">
                                 {opt.inclusions.map((inc: string, idx: number) => (
                                   <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                    <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                    <CheckCircle className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                                     <span>{inc}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {opt.exclusions && opt.exclusions.length > 0 && (
+                            <div>
+                              <h4 className="font-medium text-lg mb-3">Exclusions</h4>
+                              <ul className="space-y-2">
+                                {opt.exclusions.map((exc: string, idx: number) => (
+                                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                    <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                                    <span>{exc}</span>
                                   </li>
                                 ))}
                               </ul>

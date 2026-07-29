@@ -5,7 +5,10 @@ export interface ActivityOption {
   name: string;
   priceAed: number;
   description?: string;
+  longDescription?: string;
   inclusions?: string[];
+  highlights?: string[];
+  exclusions?: string[];
 }
 
 export interface FAQ {
@@ -244,7 +247,15 @@ export const activities: Activity[] = [
     galleryImages: [],
     inclusions: ["Hotel pickup & drop-off", "Dune bashing in 4x4", "Camel ride", "Sandboarding", "Sunset photography", "BBQ dinner (veg & non-veg)", "Live entertainment (Tanoura & fire show)", "Henna painting", "Shisha"],
     options: [
-      { name: "Classic Desert Safari", priceAed: 200, description: "Duration: 6h | Start: 03:00 PM | Guide: Hindi, Arabic, English, Urdu", inclusions: ["4x4 Pickup & Drop-off Transfer", "Dune Bashing & Camel Ride", "Live Shows: Fire, Tanura & Belly Dance", "BBQ Dinner (Veg & Non-Veg)", "Arabic Costume Photography & Heena", "Refreshments"] },
+      { 
+        name: "Classic Desert Safari", 
+        priceAed: 200, 
+        description: "Duration: 6h | Start: 03:00 PM | Guide: Hindi, Arabic, English, Urdu", 
+        longDescription: "Cherish an unforgettable Evening Desert Safari, with 4X4 off-road thrilling Dune bashing experience of Rich dunes with wow!! sunset views. Experience and Enjoy Arabian culture and heritage along the trip like of Riding camel, Experiencing Shisha smoking, Quad Biking & Buggy Riding experience, pose for souvenir pictures in traditional Emirati dress, and Arabian henna tattoos designs. Lavish BBQ dinner that comes with vegetarian and non-vegetarian dishes and unlimited Buffet. Relax and enjoy live shows like Folk Dance, Fire Show, Belly Dance & Tanura dance.",
+        highlights: ["Ages 3 and above.", "Duration: 6h", "Start time: 03:00 PM (TBA)", "Pick Up : Hotel within Dubai City Limit & Sharjah City Limit.", "Live guide: Hindi, Arabic, English, Urdu"],
+        inclusions: ["4x4 Pickup & Drop-off Transfer", "Dune Bashing, Camel Ride", "Live Shows: Fire, Tanura & Belly Dance & Arabic Folk Dance.", "BBQ Dinner (Veg & Non-Veg)", "Arabic Traditional Costume Photography, Heena Tattoos", "Refreshment (Coffee, Juice, Tea, Soft Drinks, Water)"],
+        exclusions: ["Vip Sitting Area (Pre-booking with additional cost)", "Quad Biking & Buggy Riding (Pre-Booking with additional cost)", "Sandboarding (Subject to availability)"]
+      },
       { name: "Desert Safari Premium", priceAed: 550, description: "Duration: 6h | Start: 03:00 PM | Guide: Hindi, Arabic, English, Urdu", inclusions: ["4x4 Pickup & Drop-off", "Dune Bashing & Camel Ride", "Live Shows", "Live BBQ Dinner", "VIP seating Area & Live BBQ Station", "Arabic Costume Photo & Heena", "Refreshments"] },
       { name: "Desert Safari With Quad Bike", priceAed: 650, description: "Duration: 6h | Start: 03:00 PM | Ages: 18+ | Guide: Hindi, Arabic, English, Urdu", inclusions: ["25 mins Quad Bike Riding", "4x4 Pickup & Drop-off", "Dune Bashing & Camel Ride", "Live Shows", "Live BBQ Dinner", "VIP seating & Live BBQ Station", "Arabic Costume Photo & Heena"] },
       { name: "Morning Desert Safari", priceAed: 500, description: "Duration: 4h | Start: 08:00 AM | Guide: English, Hindi, Arabic", inclusions: ["4x4 Pickup & Drop-off Transfer", "Dune Bashing", "Camel Ride", "Refreshments (Juice, Soft Drinks, Water)"] },
