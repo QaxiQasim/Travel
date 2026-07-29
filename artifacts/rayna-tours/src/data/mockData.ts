@@ -243,8 +243,17 @@ export const activities: Activity[] = [
     description: "The quintessential Dubai experience. Race over golden dunes in a 4x4, watch the sunset paint the desert in amber and rose, then settle into a traditional Bedouin camp for a lavish BBQ dinner under a canopy of stars. With live entertainment, camel rides, henna painting, and shisha, a desert safari is the memory you'll carry home from Dubai.",
     priceAed: 150,
     duration: "6-7 hours (evening: 3pm–10pm)",
-    imageUrl: "",
-    galleryImages: [],
+    imageUrl: "/images/bedouin-camp-premium.png",
+    galleryImages: [
+      "/images/dune-bashing-premium.png",
+      "/images/camel-ride-premium.png",
+      "/images/quad-bike-premium.png",
+      "/images/vip-seating-premium.png",
+      "/images/live-bbq-premium.png",
+      "/images/tanoura-dance-premium.png",
+      "/images/sandboarding-premium.png",
+      "/images/morning-safari-premium.png"
+    ],
     inclusions: ["Hotel pickup & drop-off", "Dune bashing in 4x4", "Camel ride", "Sandboarding", "Sunset photography", "BBQ dinner (veg & non-veg)", "Live entertainment (Tanoura & fire show)", "Henna painting", "Shisha"],
     options: [
       { 
