@@ -244,10 +244,10 @@ export const activities: Activity[] = [
     galleryImages: [],
     inclusions: ["Hotel pickup & drop-off", "Dune bashing in 4x4", "Camel ride", "Sandboarding", "Sunset photography", "BBQ dinner (veg & non-veg)", "Live entertainment (Tanoura & fire show)", "Henna painting", "Shisha"],
     options: [
-      { name: "Standard Desert Safari", priceAed: 150, description: "Classic dune bashing + BBQ dinner in traditional camp", inclusions: ["Pickup/drop", "Dune bashing", "Camel ride", "BBQ dinner", "Entertainment"] },
-      { name: "Premium Desert Safari", priceAed: 250, description: "Enhanced experience with private seating & upgraded menu", inclusions: ["All standard inclusions", "Private seating", "Premium BBQ menu", "Soft drinks included"] },
-      { name: "VIP Desert Safari", priceAed: 450, description: "Exclusive VIP experience with private 4x4 and gourmet dining", inclusions: ["Private 4x4", "VIP camp seating", "Gourmet BBQ dinner", "Drinks included", "Dedicated guide", "Quad bike ride"] },
-      { name: "Overnight Desert Safari", priceAed: 650, description: "Sleep under the stars in a luxury Bedouin camp", inclusions: ["All VIP inclusions", "Luxury tent", "Breakfast next morning", "Sunrise camel ride", "Stargazing"] },
+      { name: "Classic Desert Safari", priceAed: 200, description: "Duration: 6h | Start: 03:00 PM | Guide: Hindi, Arabic, English, Urdu", inclusions: ["4x4 Pickup & Drop-off Transfer", "Dune Bashing & Camel Ride", "Live Shows: Fire, Tanura & Belly Dance", "BBQ Dinner (Veg & Non-Veg)", "Arabic Costume Photography & Heena", "Refreshments"] },
+      { name: "Desert Safari Premium", priceAed: 550, description: "Duration: 6h | Start: 03:00 PM | Guide: Hindi, Arabic, English, Urdu", inclusions: ["4x4 Pickup & Drop-off", "Dune Bashing & Camel Ride", "Live Shows", "Live BBQ Dinner", "VIP seating Area & Live BBQ Station", "Arabic Costume Photo & Heena", "Refreshments"] },
+      { name: "Desert Safari With Quad Bike", priceAed: 650, description: "Duration: 6h | Start: 03:00 PM | Ages: 18+ | Guide: Hindi, Arabic, English, Urdu", inclusions: ["25 mins Quad Bike Riding", "4x4 Pickup & Drop-off", "Dune Bashing & Camel Ride", "Live Shows", "Live BBQ Dinner", "VIP seating & Live BBQ Station", "Arabic Costume Photo & Heena"] },
+      { name: "Morning Desert Safari", priceAed: 500, description: "Duration: 4h | Start: 08:00 AM | Guide: English, Hindi, Arabic", inclusions: ["4x4 Pickup & Drop-off Transfer", "Dune Bashing", "Camel Ride", "Refreshments (Juice, Soft Drinks, Water)"] },
     ],
     faqs: [
       { question: "What should I wear for the desert safari?", answer: "Wear comfortable, loose-fitting clothing. Light cotton is ideal. Closed shoes are recommended for dune bashing. A light jacket or shawl is useful for the evening when temperatures drop." },
