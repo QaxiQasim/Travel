@@ -5,7 +5,7 @@ import Layout from '@/components/layout'
 import { BookingForm } from '@/components/booking-form'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
 
-import { Clock, Users, Star, CheckCircle, Info, ChevronRight, XCircle } from 'lucide-react'
+import { Clock, Users, Star, CheckCircle, Info, ChevronRight, XCircle, X, ChevronLeft } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -38,6 +38,9 @@ export default function ActivityPage() {
   const params = useParams()
   const [selectedPackageName, setSelectedPackageName] = useState('')
   const [openDialogIndex, setOpenDialogIndex] = useState<number | null>(null)
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+
   // If no params.slug, use the pathname as slug (e.g. /desert-safari -> desert-safari)
   const pathSlug = window.location.pathname.replace(/^\//, '')
   const slug = params.slug || pathSlug
@@ -73,6 +76,21 @@ export default function ActivityPage() {
     heroImg, imgCity, imgWater, imgSkydive, imgTheme
   ]
 
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index)
+    setIsLightboxOpen(true)
+  }
+
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setLightboxIndex((prev) => (prev + 1) % gallery.length)
+  }
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setLightboxIndex((prev) => (prev - 1 + gallery.length) % gallery.length)
+  }
+
   if (isLoading) {
     return (
       <Layout>
@@ -98,19 +116,62 @@ export default function ActivityPage() {
         
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2 h-[300px] md:h-[500px] rounded-xl overflow-hidden mb-8">
-          <div className="md:col-span-2 md:row-span-2 relative group cursor-pointer">
+          <div className="md:col-span-2 md:row-span-2 relative group cursor-pointer" onClick={() => openLightbox(0)}>
             <img src={gallery[0]} alt="Main" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
           </div>
-          <div className="relative group cursor-pointer overflow-hidden"><img src={gallery[1]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" /></div>
-          <div className="relative group cursor-pointer overflow-hidden"><img src={gallery[2]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" /></div>
-          <div className="relative group cursor-pointer overflow-hidden"><img src={gallery[3]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" /></div>
-          <div className="relative group cursor-pointer overflow-hidden">
-            <img src={gallery[4]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <span className="text-white font-medium">View Photos</span>
+          {gallery.slice(1, 4).map((img, idx) => (
+            <div key={idx + 1} className="relative group cursor-pointer overflow-hidden" onClick={() => openLightbox(idx + 1)}>
+              <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
             </div>
+          ))}
+          <div className="relative group cursor-pointer overflow-hidden" onClick={() => openLightbox(4)}>
+            <img src={gallery[4]} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            {gallery.length > 5 && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-100 transition-opacity">
+                <span className="text-white font-medium text-lg">+{gallery.length - 5} More</span>
+              </div>
+            )}
+            {gallery.length <= 5 && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-white font-medium">View Photos</span>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Lightbox Modal */}
+        {isLightboxOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95">
+            <button 
+              className="absolute top-4 right-4 p-2 text-white/70 hover:text-white z-50 transition-colors"
+              onClick={() => setIsLightboxOpen(false)}
+            >
+              <X className="w-8 h-8" />
+            </button>
+            <button 
+              className="absolute left-4 p-4 text-white/70 hover:text-white z-50 transition-colors"
+              onClick={prevImage}
+            >
+              <ChevronLeft className="w-10 h-10" />
+            </button>
+            <div className="w-full h-full max-w-5xl max-h-[80vh] flex items-center justify-center p-4">
+              <img 
+                src={gallery[lightboxIndex]} 
+                alt="Gallery preview" 
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+            <button 
+              className="absolute right-4 p-4 text-white/70 hover:text-white z-50 transition-colors"
+              onClick={nextImage}
+            >
+              <ChevronRight className="w-10 h-10" />
+            </button>
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center text-white/80">
+              {lightboxIndex + 1} / {gallery.length}
+            </div>
+          </div>
+        )}
 
         {/* Title and Quick Info */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-border pb-8">
