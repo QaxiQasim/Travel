@@ -115,7 +115,7 @@ export default function ActivityPage() {
         </div>
         
         {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 h-[300px] md:h-[500px] rounded-xl overflow-hidden mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-2 h-[300px] md:h-[500px] rounded-xl overflow-hidden mb-8">
           <div className="md:col-span-2 md:row-span-2 relative group cursor-pointer" onClick={() => openLightbox(0)}>
             <img src={gallery[0]} alt="Main" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
           </div>
