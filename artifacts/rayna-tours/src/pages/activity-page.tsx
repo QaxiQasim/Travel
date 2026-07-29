@@ -8,6 +8,8 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
 import { Clock, Users, Star, CheckCircle, Info, ChevronRight, XCircle } from 'lucide-react'
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion'
 import { Card, CardContent } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 
 // Static mapping to fallback generated images if API image fails or is generic
 import imgDesert from '@assets/generated_images/hero-desert-safari.jpg'
@@ -34,6 +36,8 @@ import { activities, packages } from '@/data/mockData'
 
 export default function ActivityPage() {
   const params = useParams()
+  const [selectedPackageName, setSelectedPackageName] = useState('')
+  const [openDialogIndex, setOpenDialogIndex] = useState<number | null>(null)
   // If no params.slug, use the pathname as slug (e.g. /desert-safari -> desert-safari)
   const pathSlug = window.location.pathname.replace(/^\//, '')
   const slug = params.slug || pathSlug
@@ -288,19 +292,57 @@ export default function ActivityPage() {
                 <h2 className="text-3xl font-serif font-medium mb-8">Package Options</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {displayData.options.map((opt: any, i: number) => (
-                    <Card key={i} className="border-border hover:border-primary/50 transition-colors shadow-sm relative overflow-hidden group">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-primary transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
-                      <CardContent className="p-6">
-                        <h3 className="font-serif text-xl font-medium mb-2">{opt.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-4 h-10">{opt.description}</p>
-                        <div className="pt-4 border-t border-border flex items-end justify-between">
+                    <Dialog key={i} open={openDialogIndex === i} onOpenChange={(open) => setOpenDialogIndex(open ? i : null)}>
+                      <Card className="border-border hover:border-primary/50 transition-colors shadow-sm relative overflow-hidden group flex flex-col h-full">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary transform origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+                        <CardContent className="p-6 flex flex-col flex-1">
+                          <h3 className="font-serif text-xl font-medium mb-2">{opt.name}</h3>
+                          <p className="text-sm text-muted-foreground mb-4 flex-1">{opt.description}</p>
+                          <div className="pt-4 border-t border-border flex items-end justify-between mt-auto">
+                            <div>
+                              <span className="text-xs text-muted-foreground block mb-1">Price per person</span>
+                              <span className="text-2xl font-serif font-medium text-foreground">AED {opt.priceAed}</span>
+                            </div>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" size="sm">View Details</Button>
+                            </DialogTrigger>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+                        <DialogHeader>
+                          <DialogTitle className="text-2xl font-serif">{opt.name}</DialogTitle>
+                        </DialogHeader>
+                        <div className="mt-4 space-y-6">
                           <div>
-                            <span className="text-xs text-muted-foreground block mb-1">Price per person</span>
-                            <span className="text-2xl font-serif font-medium text-foreground">AED {opt.priceAed}</span>
+                            <span className="text-sm text-muted-foreground block">Price</span>
+                            <span className="text-2xl font-medium">AED {opt.priceAed} <span className="text-sm font-normal text-muted-foreground">per person</span></span>
+                          </div>
+                          <p className="text-muted-foreground">{opt.description}</p>
+                          
+                          {opt.inclusions && opt.inclusions.length > 0 && (
+                            <div>
+                              <h4 className="font-medium text-lg mb-3">Inclusions</h4>
+                              <ul className="space-y-2">
+                                {opt.inclusions.map((inc: string, idx: number) => (
+                                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                    <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                                    <span>{inc}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                          <div className="pt-4 border-t border-border flex justify-end">
+                            <Button onClick={() => {
+                              setSelectedPackageName(`${displayData.title} - ${opt.name}`)
+                              setOpenDialogIndex(null)
+                              document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' })
+                            }}>Select Package & Book</Button>
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </DialogContent>
+                    </Dialog>
                   ))}
                 </div>
               </FadeIn>
@@ -325,9 +367,9 @@ export default function ActivityPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="w-full lg:w-[400px]">
+          <div className="w-full lg:w-[400px]" id="booking-section">
             <div className="sticky top-24 space-y-6">
-              <BookingForm activityOrPackage={displayData.title} />
+              <BookingForm activityOrPackage={selectedPackageName || displayData.title} />
               
               <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
                 <h3 className="font-serif text-lg font-medium mb-4 pb-4 border-b border-border">Why choose DONNVAY?</h3>
