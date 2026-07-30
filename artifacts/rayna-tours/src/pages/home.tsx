@@ -75,6 +75,7 @@ const DESTINATIONS = [
 export default function Home() {
   const [, navigate] = useLocation()
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
+  const [testimonialsRef] = useEmblaCarousel({ loop: true, dragFree: true, align: 'start' })
   const [selectedIndex, setSelectedIndex] = React.useState(0)
 
   // Search bar state
@@ -553,6 +554,59 @@ export default function Home() {
                 </div>
               </div>
             </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-background overflow-hidden relative">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8 text-foreground">Testimonials</h2>
+          
+          {/* Trustpilot Banner */}
+          <div className="bg-[#0a1a2f] text-white rounded-t-xl p-4 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Star className="w-8 h-8 fill-[#00b67a] text-[#00b67a]" />
+              <span className="text-2xl md:text-3xl font-bold tracking-tight">Trustpilot</span>
+            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex bg-[#00b67a] p-1.5 gap-1 rounded-sm">
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-5 h-5 fill-white text-white" />)}
+              </div>
+              <span className="text-sm md:text-base font-medium">Trusted by hundreds of happy travelers</span>
+            </div>
+          </div>
+          
+          {/* Reviews Slider */}
+          <div className="relative border border-t-0 border-border/50 rounded-b-xl p-6 md:p-8 bg-muted/10 shadow-sm">
+            <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={testimonialsRef}>
+              <div className="flex gap-6">
+                {testimonials.map((t) => (
+                  <div key={t.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] lg:flex-[0_0_33.33%] xl:flex-[0_0_25%] min-w-0">
+                    <Card className="h-full border-border/50 shadow-sm hover:shadow-md transition-shadow bg-card rounded-xl">
+                      <CardContent className="p-6 flex flex-col h-full">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 rounded-full bg-[#005a70] text-white flex items-center justify-center font-bold text-lg shrink-0">
+                            {t.name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-bold text-sm text-foreground">{t.name}</p>
+                            <p className="text-xs text-muted-foreground">{t.location}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-1 mb-4">
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className={`w-4 h-4 ${i < t.rating ? 'fill-[#00b67a] text-[#00b67a]' : 'fill-muted text-muted'}`} />
+                          ))}
+                        </div>
+                        <h4 className="font-bold text-sm mb-3 text-[#005a70] line-clamp-1">{t.review.split('.')[0]}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-4 leading-relaxed flex-grow">{t.review}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
