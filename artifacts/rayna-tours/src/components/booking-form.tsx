@@ -24,12 +24,13 @@ const enquirySchema = z.object({
 type EnquiryFormValues = z.infer<typeof enquirySchema>
 
 interface BookingFormProps {
+  activityTitle?: string;
   activityOrPackage: string;
   defaultDate?: string;
   packageOptions?: { name: string, priceAed?: number }[];
 }
 
-export function BookingForm({ activityOrPackage, defaultDate = '', packageOptions }: BookingFormProps) {
+export function BookingForm({ activityTitle, activityOrPackage, defaultDate = '', packageOptions }: BookingFormProps) {
   const { toast } = useToast()
   
   const [isPending, setIsPending] = React.useState(false)
@@ -92,11 +93,14 @@ export function BookingForm({ activityOrPackage, defaultDate = '', packageOption
                   <SelectValue placeholder="Select a package" />
                 </SelectTrigger>
                 <SelectContent>
-                  {packageOptions.map((opt, i) => (
-                    <SelectItem key={i} value={`${activityOrPackage.split(' - ')[0]} - ${opt.name}`}>
+                  {packageOptions.map((opt, i) => {
+                    const optValue = activityTitle ? `${activityTitle} - ${opt.name}` : `${activityOrPackage.split(' - ')[0]} - ${opt.name}`;
+                    return (
+                    <SelectItem key={i} value={optValue}>
                       {opt.name} {opt.priceAed ? `(AED ${opt.priceAed})` : ''}
                     </SelectItem>
-                  ))}
+                    )
+                  })}
                 </SelectContent>
               </Select>
               {form.formState.errors.activityOrPackage && <p className="text-sm text-destructive">{form.formState.errors.activityOrPackage.message}</p>}

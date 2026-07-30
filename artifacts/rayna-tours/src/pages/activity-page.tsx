@@ -459,6 +459,7 @@ export default function ActivityPage() {
           <div className="w-full lg:w-[400px]" id="booking-section">
             <div className="sticky top-24 space-y-6">
               <BookingForm 
+                activityTitle={displayData.title}
                 activityOrPackage={selectedPackageName || (displayData.options && displayData.options.length > 0 ? `${displayData.title} - ${displayData.options[0].name}` : displayData.title)} 
                 packageOptions={displayData.options}
               />
