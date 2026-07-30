@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'wouter'
+import { Link, useLocation } from 'wouter'
 import Layout from '@/components/layout'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -37,6 +37,7 @@ const imageMap: Record<string, string> = {
 import heroBg from '@assets/generated_images/hero-desert-safari.jpg'
 
 export default function ActivitiesPage() {
+  const [, setLocation] = useLocation()
   const [priceRange, setPriceRange] = useState([0, 1500])
   const [committedPrice, setCommittedPrice] = useState([0, 1500])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
@@ -176,7 +177,10 @@ export default function ActivitiesPage() {
                 <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredActivities.map((activity) => (
                     <StaggerItem key={activity.id}>
-                      <Card className="h-full group overflow-hidden border-border/50 hover:border-primary/50 transition-colors bg-card hover:shadow-xl hover:shadow-primary/5">
+                      <Card 
+                        className="h-full group overflow-hidden border-border/50 hover:border-primary/50 transition-colors bg-card hover:shadow-xl hover:shadow-primary/5 cursor-pointer"
+                        onClick={() => setLocation(`/${activity.slug}`)}
+                      >
                         <div className="relative h-48 overflow-hidden">
                           <img 
                             src={activity.imageUrl || imageMap[activity.slug] || heroBg} 
@@ -227,11 +231,9 @@ export default function ActivitiesPage() {
                                 {activity.priceAed}
                               </p>
                             </div>
-                            <Link href={`/${activity.slug}`}>
-                              <Button size="sm" className="rounded-full px-5">
-                                Book
-                              </Button>
-                            </Link>
+                            <Button size="sm" className="rounded-full px-5">
+                              Book
+                            </Button>
                           </div>
                         </CardContent>
                       </Card>
