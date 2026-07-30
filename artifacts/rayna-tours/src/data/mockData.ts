@@ -440,15 +440,21 @@ export const activities: Activity[] = [
   {
     id: 7,
     slug: "dhow-cruise",
-    title: "Dhow Cruise Dinner - Creek",
+    title: "Dhow Cruise",
     category: "dining-cruise",
     shortDescription: "Romantic dinner cruise on a traditional wooden dhow — Marina or Creek.",
     description: "Drift along Dubai's shimmering waterways on a beautifully decorated traditional wooden dhow while enjoying a lavish international buffet dinner, live entertainment, and breathtaking views of the illuminated skyline. Choose between the glamorous Dubai Marina or the historic Dubai Creek.",
-    priceAed: 38,
-    duration: "2.5 hours (7:30 PM – 10:00 PM)",
+    priceAed: 55,
+    duration: "2 hours (8:00 PM – 10:00 PM)",
     operatingHours: "08:00 AM to 08:00 PM",
-    imageUrl: "",
-    galleryImages: [],
+    imageUrl: "/images/dhow-cruise-marina-premium.png",
+    galleryImages: [
+      "/images/dhow-cruise-marina-premium.png",
+      "/images/dhow-cruise-creek-premium.png",
+      "/images/mega-yacht-lotus-premium.png",
+      "/images/dhow-cruise-sunset-premium.png",
+      "/images/dhow-cruise-buffet-premium.png"
+    ],
     highlights: [
       "Discover one of the region's most historic spots, the way it is meant to be with our Dhow Cruise Creek.",
       "Sail aboard a traditional wooden dhow which once played a vital part in boosting the region's economy.",
