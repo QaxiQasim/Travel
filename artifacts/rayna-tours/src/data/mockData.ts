@@ -447,13 +447,13 @@ export const activities: Activity[] = [
     priceAed: 55,
     duration: "2 hours (8:00 PM – 10:00 PM)",
     operatingHours: "08:00 AM to 08:00 PM",
-    imageUrl: "/images/dhow-cruise-marina-premium.png",
+    imageUrl: "/images/ultra-luxury-private-yacht.png",
     galleryImages: [
-      "/images/dhow-cruise-marina-premium.png",
+      "/images/ultra-luxury-private-yacht.png",
       "/images/dhow-cruise-creek-premium.png",
       "/images/mega-yacht-lotus-premium.png",
-      "/images/dhow-cruise-sunset-premium.png",
-      "/images/dhow-cruise-buffet-premium.png"
+      "/images/premium-marina-dinner-yacht.png",
+      "/images/dhow-cruise-marina-premium.png"
     ],
     highlights: [
       "Discover one of the region's most historic spots, the way it is meant to be with our Dhow Cruise Creek.",
