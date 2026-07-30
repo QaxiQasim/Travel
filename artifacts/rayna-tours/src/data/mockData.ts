@@ -483,10 +483,51 @@ export const activities: Activity[] = [
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.243553258813!2d55.30906231501062!3d25.26239198386629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f433994c6ec07%3A0xe5a363f721e069c9!2sAl%20Seef%20St%20-%20Dubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s"
     },
     options: [
-      { name: "Marina Dhow Cruise — Standard", priceAed: 149, description: "Cruise the glamorous Dubai Marina past luxury yachts and gleaming skyscrapers", inclusions: ["Buffet dinner", "Entertainment", "Welcome drink", "Marina views"] },
-      { name: "Creek Dhow Cruise — Standard", priceAed: 149, description: "Sail the historic Dubai Creek with views of heritage buildings and the old city", inclusions: ["Buffet dinner", "Entertainment", "Welcome drink", "Creek views"] },
-      { name: "Marina Dhow Cruise — Premium", priceAed: 289, description: "Upgrade to a luxury dhow with enhanced menu and premium seating", inclusions: ["Premium buffet", "Dedicated service", "Welcome cocktail", "A la carte desserts"] },
-      { name: "Marina Private Dhow (Whole Boat)", priceAed: 4500, description: "Book the entire dhow exclusively for your group (up to 80 persons)", inclusions: ["Full private dhow", "Custom menu", "DJ/entertainment of choice", "Decoration"] },
+      { 
+        name: "Traditional Dhow Cruise at Old Dubai ( Al Seef )", 
+        priceAed: 55, 
+        description: "Duration: 2h | Start: 08:00 PM (TBA)", 
+        longDescription: "Eperience about the history of the dhow, a traditional wooden boat that has been used for centuries in the Arabian Gulf, Enjoy the stunning views of Dubai's historic landmarks and experience a slice of Dubai's maritime heritage on a traditional wooden Dhow. Enjoy a buffet dinner on a traditional dhow boat as you cruise along the creek and entertained by live music, traditional dance performances, and (puppet show - Selective days) Capture the glittering skyline of Dubai with the city lights at sunset and view of Old Souk and water taxis.",
+        highlights: ["Ages infant and above.", "Duration: 2h", "Start time: 08:00 PM (TBA)"],
+        inclusions: ["Dhow cruise Ride 02 Hours", "Open international Buffet dinner (Includes Veg & Non-Veg)", "Unlimited Water & Soft Drinks on Board", "Live entertainment Shows", "Alcoholic drinks (Option Available with extra Cost)", "Hotel Transportation (Option Available with Extra Cost)", "VIP table Upper Deck (Option available with Extra Cost )"],
+        exclusions: ["Hotel Transportation", "Alcoholic Drinks", "VIP Table Upper Deck"]
+      },
+      { 
+        name: "Traditional Dhow Cruise at Dubai Marina", 
+        priceAed: 120, 
+        description: "Duration: 2h | Start: 08:00 PM (TBA)", 
+        longDescription: "Cruise along Modern Dubai Marina on a Dinner boat cruise. cheer on stunning views of the city's modern architecture of iconic skyscrapers, luxury hotels and mind blowing illuminated colourful lights at the go. Hop on a traditional Arabian dhow boat, offering a comfortable and stylish setting to enjoy the sights seeing while dinning. Enjoy gourmet dining options of Veg & Non-Veg Savors of international cuisine while watching live entertainment such as music, dance performances, or cultural shows. Enjoy numerous photo opportunities along the way, especially against the backdrop of the Arabian Gulf and capture the memorable moments.",
+        highlights: ["Ages infant and above.", "Duration: 2h", "Start time: 08:00 PM (TBA)"],
+        inclusions: ["Dhow cruise Ride 02 Hours", "Open international Buffet dinner (Includes Veg & Non-Veg)", "Unlimited Water & Soft Drinks on Board", "Live entertainment Shows", "Alcoholic drinks (Option Available with extra Cost)", "Hotel Transportation (Option Available with Extra Cost)", "VIP table Upper Deck (Option available with Extra Cost )"],
+        exclusions: ["Hotel Transportation", "Alcoholic Drinks", "VIP Table Upper Deck"]
+      },
+      { 
+        name: "Mega Yacht Dinner Cruise ( The Lotus )", 
+        priceAed: 500, 
+        description: "Duration: 2h | Start: 06:45 PM (TBA)", 
+        longDescription: "Experience the Cruise liner feeling on a Mega Yacht at Dubai Marina (Lotus) Explore the largest mega yacht and sail past the iconic sights of Dubai Marina skyline and passing via Palm Jumeirah and Atlantis the palm. Departing from the Dubai Marina canal and cruise across Jumeirah Beach Residence, Ain Dubai panoramic wheel towards Atlantis Hotel situated on the outer crown of the famous Palm Jumeirah. Enjoy varieties of canapes, international buffet and live cooking stations. Discover multiple decks and experience the dining areas, enjoy a wide selection of local and international Buffet dishes and cocktails. Live performance shows, aerial feats, traditional dances and DJ music will keep you entertained throughout the cruise.",
+        highlights: ["Ages infant and above.", "Duration: 2h", "Start time: 06:45 PM (TBA)"],
+        inclusions: ["Professional captain and crew", "Unique Designed Yacht", "Safety equipment", "Live entertainment, in-house DJ", "Top observation deck access (Standard ticket option- no table or seating)", "International buffet dishes in the main saloon or live station (open for all)", "Soft drinks, juices, water", "Bar tenders and buffet service staff", "Access to a reserved table in the separate sky-deck (VIP ticket option)", "Canapés are served directly at the table (VIP ticket option)", "Self-service buffet in the main saloon (VIP ticket option)", "Priority check-in lounge (VIP ticket option)", "Welcome soft drinks (VIP ticket option)", "Hotel pick up and drop off (Option available)"],
+        exclusions: ["WiFi", "Paid parking", "Hotel Transportation (Option Available with VIP Package)", "Alcoholic Drinks (Available with VIP package)", "VIP Table Reservation Upper Deck (Available with VIP Package)"]
+      },
+      { 
+        name: "Marina Dinner Cruise (Exclusive Yacht )", 
+        priceAed: 700, 
+        description: "Duration: 1h 30m | Start: 08:00 PM | Guide: English", 
+        longDescription: "Experience the Cruise liner feeling on a Mega Yacht at Dubai Marina (Lotus) Explore the largest mega yacht and sail past the iconic sights of Dubai Marina skyline and passing via Palm Jumeirah and Atlantis the palm. Departing from the Dubai Marina canal and cruise across Jumeirah Beach Residence, Ain Dubai panoramic wheel towards Atlantis Hotel situated on the outer crown of the famous Palm Jumeirah. Enjoy varieties of canapes, international buffet and live cooking stations. Discover multiple decks and experience the dining areas, enjoy a wide selection of local and international Buffet dishes and cocktails. Live performance shows, aerial feats, traditional dances and DJ music will keep you entertained throughout the cruise.",
+        highlights: ["Ages 1 and above", "Duration: 1h 30m", "Start time: 08:00 PM", "Live guide: English"],
+        inclusions: ["International Buffet dinner", "Private seating ( Premium Ticket only )", "Unlimited Beers, wines and spirits (Premium Ticket only )", "Live Pasta cooking stations", "Unlimited juices, bottled water, tea & coffee", "Live Music"],
+        exclusions: ["Hotel pickup and drop-off (Option available prebooking)", "VIP Package ( Option Available )"]
+      },
+      { 
+        name: "Yacht Tour - Boat Trip for Private event", 
+        priceAed: 700, 
+        description: "Capacity: 10 to 150 Pax | Duration: 1–5 Hours | Captain: English Speaking", 
+        longDescription: "Enjoy the best luxury yacht charter (Boat trip) in Dubai and see the city from a unique perspective. Whether you’re seeking a relaxing day at sea or an extravagant event, this luxury boat trip experience offers a chance to enjoy the city's luxury and splendor from the water. (Price is per Hour for 40ft/50ft/60ft/70ft/90ft Yachts)",
+        highlights: ["Ages 1 and above", "Capacity Per Yacht – 10 Pax to 150Pax", "Duration: Minimum 1 – 5 Hours", "Start time: As per time slot.", "Captain : English Speaking", "Enjoy your private tour with friends and family.", "Explore Dubai Marina skyline, Dubai Canal and JBR Beach", "See the Burj Al Arab and the Blue Water Island.", "Cruise around the Palm Jumeirah and see the iconic Atlantis the Palm."],
+        inclusions: ["Luxury yacht charter", "Views of Dubai’s iconic landmarks", "Meet and greet", "Free Wi-Fi", "Free Soft drinks", "Free fresh towel", "Life jackets", "Music system", "BBQ Grill (Additional Charges applicable)", "Disposable cutlery and dishes", "Food and premium drinks (guest are allowed to bring food and drinks onboard)", "Transportation to and from the yacht ( Additional Charges Applicable )", "The 1-hour trip is only for the Marina Canal and JBR area"],
+        exclusions: ["Swimming is not allowed.", "Any form of shoes, flipflop are not allowed onboard", "Hotel Transportation (Option Available with additional cost for pre-booking)", "Food & Beverage (Option Available for Pre Booking)", "Birthday Cakes & Party arrangement (Option Available for Pre Booking)."]
+      }
     ],
     faqs: [
       { question: "What type of food is served?", answer: "An extensive international buffet featuring Arabic, Indian, continental, and live cooking stations. Vegetarian options are always available. Halal food is guaranteed." },
