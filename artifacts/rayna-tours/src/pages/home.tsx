@@ -7,7 +7,8 @@ import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, Clock, CheckCircle, Mail, ChevronDown, Minus, Plus, BadgeDollarSign, Zap } from 'lucide-react'
+import { Label } from '@/components/ui/label'
+import { MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, Clock, CheckCircle, Mail, ChevronDown, Minus, Plus, BadgeDollarSign, Zap, Phone } from 'lucide-react'
 import { packages, activities, testimonials } from '@/data/mockData'
 
 // Local imports for generated images
@@ -556,42 +557,137 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-24 relative overflow-hidden bg-transparent">
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent -z-10"></div>
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto relative group">
-            {/* Ambient Glow */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30 rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-1000"></div>
+      {/* Consultation Section */}
+      <section className="py-24 relative overflow-hidden bg-muted/30">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-5 blur-sm mix-blend-luminosity"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             
-            <div className="relative bg-background/40 backdrop-blur-xl border border-primary/20 p-12 md:p-20 rounded-3xl text-center overflow-hidden shadow-2xl">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
-
-              <FadeIn className="relative z-10">
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8 border border-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-                  <Mail className="w-10 h-10 text-primary animate-pulse" />
+            {/* Left Content */}
+            <FadeIn>
+              <div className="max-w-xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6 border border-primary/20">
+                  <Mail className="w-4 h-4" />
+                  <span>GET IN TOUCH</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-serif font-medium mb-6">Join The Insider List</h2>
-                <p className="text-muted-foreground mb-10 leading-relaxed max-w-2xl mx-auto text-lg">
-                  Subscribe to receive exclusive VIP offers, early access to new desert experiences, and our curated Dubai luxury guide delivered straight to your inbox.
+                <h2 className="text-4xl md:text-5xl font-serif font-semibold mb-6 leading-tight text-foreground">
+                  Plan Your Next Adventure With Us
+                </h2>
+                <p className="text-muted-foreground text-lg mb-10 leading-relaxed">
+                  Have questions about visas, holiday packages, or flight bookings? Fill out the form, and our expert travel consultants will get back to you within 24 hours to craft your perfect itinerary.
                 </p>
-                <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto relative" onSubmit={e => e.preventDefault()}>
-                  <div className="relative flex-1 group/input">
-                    <div className="absolute inset-0 bg-primary/20 rounded-md blur opacity-0 group-focus-within/input:opacity-100 transition-opacity"></div>
-                    <Input 
-                      type="email" 
-                      placeholder="Enter your email address..." 
-                      className="relative bg-background/80 border-primary/30 text-foreground placeholder:text-muted-foreground h-14 px-6 rounded-lg focus-visible:ring-primary focus-visible:border-primary transition-all shadow-inner"
-                    />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-background border border-border/50 shadow-sm hover:border-primary/30 hover:shadow-md transition-all group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Call Us</p>
+                      <p className="font-medium text-sm">+971 52 420 4409</p>
+                    </div>
                   </div>
-                  <Button size="lg" className="h-14 px-10 whitespace-nowrap bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 transition-all shadow-lg rounded-lg text-base font-semibold">
-                    Subscribe Now
+
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-background border border-border/50 shadow-sm hover:border-primary/30 hover:shadow-md transition-all group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary">
+                      <Mail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Email Address</p>
+                      <p className="font-medium text-sm">info@donnvay.com</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-background border border-border/50 shadow-sm hover:border-primary/30 hover:shadow-md transition-all group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Office Hours</p>
+                      <p className="font-medium text-sm">Mon-Fri (9:00 AM - 6:00 PM)</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-background border border-border/50 shadow-sm hover:border-primary/30 hover:shadow-md transition-all group">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors text-primary">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">Location</p>
+                      <p className="font-medium text-sm">Dubai, UAE</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Right Form */}
+            <FadeIn>
+              <div className="bg-background rounded-3xl p-8 md:p-10 shadow-2xl border border-border relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                
+                <h3 className="text-2xl font-bold mb-8 relative z-10">Request a Consultation</h3>
+                
+                <form className="space-y-6 relative z-10" onSubmit={e => e.preventDefault()}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="fullName" className="text-xs font-semibold text-muted-foreground">Full Name <span className="text-red-500">*</span></Label>
+                      <Input id="fullName" placeholder="John Doe" className="h-12 bg-muted/30 border-border/50 focus-visible:ring-primary/20" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-xs font-semibold text-muted-foreground">Phone Number <span className="text-red-500">*</span></Label>
+                      <Input id="phone" placeholder="+1 (555) 000-0000" className="h-12 bg-muted/30 border-border/50 focus-visible:ring-primary/20" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-xs font-semibold text-muted-foreground">Email Address <span className="text-red-500">*</span></Label>
+                      <Input id="email" type="email" placeholder="john@example.com" className="h-12 bg-muted/30 border-border/50 focus-visible:ring-primary/20" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="city" className="text-xs font-semibold text-muted-foreground">City <span className="text-red-500">*</span></Label>
+                      <Input id="city" placeholder="Enter your city" className="h-12 bg-muted/30 border-border/50 focus-visible:ring-primary/20" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="destination" className="text-xs font-semibold text-muted-foreground">Travel Destination <span className="text-red-500">*</span></Label>
+                      <Input id="destination" placeholder="e.g. Dubai, Switzerland" className="h-12 bg-muted/30 border-border/50 focus-visible:ring-primary/20" />
+                    </div>
+                    <div className="space-y-2 flex flex-col justify-end relative group">
+                      <Label className="text-xs font-semibold text-muted-foreground mb-2">Service Required <span className="text-red-500">*</span></Label>
+                      <div className="relative">
+                        <select className="w-full h-12 bg-muted/30 border border-border/50 rounded-md px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none text-foreground/80">
+                          <option value="">Select Service</option>
+                          <option value="visa">Visa Services</option>
+                          <option value="tours">Holiday Packages</option>
+                          <option value="flights">Flight Bookings</option>
+                          <option value="activities">Activities & Tours</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-xs font-semibold text-muted-foreground">Message (optional)</Label>
+                    <textarea 
+                      id="message" 
+                      placeholder="Tell us more about your travel plans..." 
+                      className="w-full min-h-[100px] p-3 rounded-md bg-muted/30 border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm resize-y"
+                    ></textarea>
+                  </div>
+
+                  <Button className="w-full h-14 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-base font-semibold shadow-xl shadow-blue-500/20 group transition-all">
+                    <Mail className="w-5 h-5 mr-2 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
+                    Submit Enquiry
                   </Button>
                 </form>
-              </FadeIn>
-            </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>
