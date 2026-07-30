@@ -758,7 +758,7 @@ export const testimonials: Testimonial[] = [
     name: "Sarah M.",
     location: "London, UK",
     rating: 5,
-    review: "Rayna Tours made our Dubai honeymoon absolutely magical. The desert safari was the highlight — watching the sunset over the dunes with my husband before a candlelit dinner under the stars. Impeccable service from start to finish.",
+    review: "Donnvay Tours made our Dubai honeymoon absolutely magical. The desert safari was the highlight — watching the sunset over the dunes with my husband before a candlelit dinner under the stars. Impeccable service from start to finish.",
     avatarUrl: null,
   },
   {
@@ -766,7 +766,7 @@ export const testimonials: Testimonial[] = [
     name: "Rajesh Kumar",
     location: "Mumbai, India",
     rating: 5,
-    review: "Booked the Dubai Complete Experience package for a family of 5. Everything was perfectly coordinated — transfers, timings, tickets. The Burj Khalifa at sunset was worth every dirham. Rayna Tours exceeded every expectation.",
+    review: "Booked the Dubai Complete Experience package for a family of 5. Everything was perfectly coordinated — transfers, timings, tickets. The Burj Khalifa at sunset was worth every dirham. Donnvay Tours exceeded every expectation.",
     avatarUrl: null,
   },
   {
@@ -774,7 +774,7 @@ export const testimonials: Testimonial[] = [
     name: "James & Emma T.",
     location: "Sydney, Australia",
     rating: 5,
-    review: "We chose Rayna Tours on recommendation from a colleague and they delivered brilliantly. The dhow cruise dinner along the Marina was breathtaking — the food, the entertainment, the views. We will absolutely book again.",
+    review: "We chose Donnvay Tours on recommendation from a colleague and they delivered brilliantly. The dhow cruise dinner along the Marina was breathtaking — the food, the entertainment, the views. We will absolutely book again.",
     avatarUrl: null,
   },
   {
@@ -782,7 +782,7 @@ export const testimonials: Testimonial[] = [
     name: "Fatima Al-Hassan",
     location: "Riyadh, Saudi Arabia",
     rating: 5,
-    review: "Outstanding service throughout our stay. The VIP desert safari was an unforgettable experience for our family. Professional guides, delicious food, and beautifully arranged camp. Rayna Tours sets the gold standard.",
+    review: "Outstanding service throughout our stay. The VIP desert safari was an unforgettable experience for our family. Professional guides, delicious food, and beautifully arranged camp. Donnvay Tours sets the gold standard.",
     avatarUrl: null,
   },
   {
@@ -798,7 +798,7 @@ export const testimonials: Testimonial[] = [
     name: "Priya Sharma",
     location: "Delhi, India",
     rating: 5,
-    review: "From the moment we landed to our departure, Rayna Tours looked after us impeccably. The Dubai holiday package covered everything we wanted to see. No stress, no confusion — just pure enjoyment. Highly recommended!",
+    review: "From the moment we landed to our departure, Donnvay Tours looked after us impeccably. The Dubai holiday package covered everything we wanted to see. No stress, no confusion — just pure enjoyment. Highly recommended!",
     avatarUrl: null,
   },
 ];
