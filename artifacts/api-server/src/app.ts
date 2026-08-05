@@ -7,6 +7,7 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+/*
 app.use(
   // @ts-ignore
   pinoHttp({
@@ -27,6 +28,7 @@ app.use(
     },
   }),
 );
+*/
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
