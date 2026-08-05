@@ -1,2 +1,2 @@
-import app from "../artifacts/api-server/src/app";
+import app from "@workspace/api-server";
 export default app;
