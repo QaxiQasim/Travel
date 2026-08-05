@@ -29,6 +29,12 @@ app.use(
 );
 */
 app.use(cors());
+app.use((req: any, res: any, next: any) => {
+  if (req.body !== undefined) {
+    req._body = true;
+  }
+  next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

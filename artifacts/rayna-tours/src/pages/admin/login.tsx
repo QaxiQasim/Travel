@@ -26,7 +26,7 @@ export default function AdminLogin() {
       const data = await res.json()
       
       if (!res.ok) {
-        throw new Error(data.error || 'Login failed')
+        throw new Error(data.details || data.error || 'Login failed')
       }
       
       localStorage.setItem('adminToken', data.token)
