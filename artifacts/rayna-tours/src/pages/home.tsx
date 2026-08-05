@@ -340,7 +340,7 @@ export default function Home() {
             </div>
           ) : (
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {popularActivities.map((activity) => (
+              {popularActivities.map((activity: any) => (
                 <StaggerItem key={activity.id}>
                   <Card className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col overflow-hidden relative">
                     <Link href={`/${activity.slug}`} className="block relative h-64 overflow-hidden">

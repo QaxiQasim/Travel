@@ -123,7 +123,7 @@ export default function ActivitiesPage() {
                 <div className="mb-8">
                   <h4 className="font-medium mb-4 text-sm uppercase tracking-wider text-muted-foreground">Category</h4>
                   <div className="space-y-3">
-                    {categories.map(cat => (
+                    {categories.map((cat: string) => (
                       <div key={cat} className="flex items-center space-x-3">
                         <Checkbox 
                           id={`cat-${cat}`} 
@@ -183,7 +183,7 @@ export default function ActivitiesPage() {
                 </div>
               ) : (
                 <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredActivities.map((activity) => (
+                  {filteredActivities.map((activity: any) => (
                     <StaggerItem key={activity.id}>
                       <Card 
                         className="h-full group overflow-hidden border-border/50 hover:border-primary/50 transition-colors bg-card hover:shadow-xl hover:shadow-primary/5 cursor-pointer"
@@ -223,7 +223,7 @@ export default function ActivitiesPage() {
                           </div>
                           
                           <ul className="space-y-1.5 mb-6 text-sm text-muted-foreground flex-grow">
-                            {activity.inclusions.slice(0, 3).map((inc, i) => (
+                            {activity.inclusions?.slice(0, 3).map((inc: any, i: number) => (
                               <li key={i} className="flex items-start gap-2">
                                 <CheckCircle className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
                                 <span className="line-clamp-1">{inc}</span>

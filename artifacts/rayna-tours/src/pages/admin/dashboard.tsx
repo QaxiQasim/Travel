@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('activities')
-  const [, setLocation] = useNavigate()
+  const [, setLocation] = useLocation()
   const queryClient = useQueryClient()
 
   useEffect(() => {

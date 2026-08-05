@@ -9,7 +9,7 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [, setLocation] = useNavigate()
+  const [, setLocation] = useLocation()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
