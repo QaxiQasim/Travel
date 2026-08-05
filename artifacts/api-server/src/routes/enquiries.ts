@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { Router, type IRouter } from "express";
-import { db, enquiriesTable } from "@workspace/db";
+import { db, desc } from "@workspace/db";
+import { enquiriesTable } from "@workspace/db/schema";
 import { CreateEnquiryBody } from "@workspace/api-zod";
-import { desc } from "drizzle-orm";
 
 const router: IRouter = Router();
 

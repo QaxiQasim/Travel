@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/app.ts"
+    ".": "./dist/export.mjs"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development pnpm run build && cross-env NODE_ENV=development DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres pnpm run start",

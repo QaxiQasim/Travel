@@ -16,3 +16,4 @@ export const pool = process.env.DATABASE_URL
 export const db = pool ? drizzle(pool, { schema }) : null as any;
 
 export * from "./schema/index.js";
+export { eq, desc, sql } from "drizzle-orm";

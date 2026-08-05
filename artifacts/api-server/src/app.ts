@@ -1,7 +1,7 @@
 // @ts-nocheck
 import express, { type Express } from "express";
 import cors from "cors";
-import router from "./routes";
+import router from "./routes/index.js";
 // import { logger } from "./lib/logger";
 
 const app: Express = express();

@@ -12,6 +12,7 @@
   "dependencies": {
     "@replit/connectors-sdk": "^0.4.1",
     "@workspace/api-server": "workspace:*",
+    "@workspace/api-zod": "workspace:*",
     "@workspace/db": "workspace:*"
   },
   "devDependencies": {
