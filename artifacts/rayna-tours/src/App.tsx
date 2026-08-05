@@ -12,6 +12,8 @@ import ActivitiesPage from '@/pages/activities';
 import ChauffeurPage from '@/pages/chauffeur';
 import CarDetailsPage from '@/pages/car-details';
 import NotFound from '@/pages/not-found';
+import AdminLogin from '@/pages/admin/login';
+import AdminDashboard from '@/pages/admin/dashboard';
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,10 @@ function Router() {
       
       {/* Fallback for dynamic slugs if needed */}
       <Route path="/activity/:slug" component={ActivityPage} />
+      
+      {/* Admin Pages */}
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/dashboard" component={AdminDashboard} />
       
       <Route component={NotFound} />
     </Switch>

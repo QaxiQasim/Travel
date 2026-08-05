@@ -9,7 +9,8 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { MapPin, Calendar, Users, Star, ArrowRight, ShieldCheck, Clock, CheckCircle, Mail, ChevronDown, Minus, Plus, BadgeDollarSign, Zap, Phone } from 'lucide-react'
-import { packages, activities, testimonials } from '@/data/mockData'
+import { packages, testimonials } from '@/data/mockData'
+import { useQuery } from '@tanstack/react-query'
 
 // Local imports for generated images
 import heroSkyline from '@assets/generated_images/hero-dubai-skyline.jpg'
@@ -74,6 +75,15 @@ const DESTINATIONS = [
 
 export default function Home() {
   const [, navigate] = useLocation()
+  
+  const { data: activities = [] } = useQuery({
+    queryKey: ['activities'],
+    queryFn: async () => {
+      const res = await fetch('/api/activities')
+      return res.json()
+    }
+  })
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
   const [testimonialsRef] = useEmblaCarousel({ loop: true, dragFree: true, align: 'start' })
   const [selectedIndex, setSelectedIndex] = React.useState(0)

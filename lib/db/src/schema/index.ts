@@ -18,3 +18,6 @@
 //   export type Post = typeof postsTable.$inferSelect;
 
 export * from "./enquiries.js";
+export * from "./activities.js";
+export * from "./chauffeur_rates.js";
+export * from "./admin_users.js";

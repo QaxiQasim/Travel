@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Clock, Users, Star, MapPin, CheckCircle, ChevronRight, Filter, Search } from 'lucide-react'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
 
-import { activities } from '@/data/mockData'
+import { useQuery } from '@tanstack/react-query'
 
 // Fallback images for existing activities
 import imgDesert from '@assets/generated_images/hero-desert-safari.jpg'
@@ -44,8 +44,16 @@ export default function ActivitiesPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [showMobileFilters, setShowMobileFilters] = useState(false)
 
+  const { data: activities = [], isLoading } = useQuery({
+    queryKey: ['activities'],
+    queryFn: async () => {
+      const res = await fetch('/api/activities')
+      return res.json()
+    }
+  })
+
   // Get unique categories
-  const categories = Array.from(new Set(activities.map(a => a.category)))
+  const categories = Array.from(new Set(activities.map((a: any) => a.category)))
 
   const toggleCategory = (cat: string) => {
     setSelectedCategories(prev => 
@@ -53,7 +61,7 @@ export default function ActivitiesPage() {
     )
   }
 
-  const filteredActivities = activities.filter(activity => {
+  const filteredActivities = activities.filter((activity: any) => {
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(activity.category)
     const matchesPrice = activity.priceAed >= committedPrice[0] && activity.priceAed <= committedPrice[1]
     const matchesSearch = activity.title.toLowerCase().includes(searchTerm.toLowerCase())

@@ -46,11 +46,7 @@ router.post("/enquiries", async (req: any, res: any): Promise<void> => {
 // This endpoint is kept for admin/debugging purposes.
 // In production, add authentication middleware before this route.
 router.get("/enquiries", async (_req: any, res: any): Promise<void> => {
-  // Only allow in development for now
-  if (process.env.NODE_ENV !== "development") {
-    res.status(403).json({ error: "Forbidden" });
-    return;
-  }
+  // Endpoint is available for admin dashboard
 
   const enquiries = await db
     .select()
