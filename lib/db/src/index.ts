@@ -15,10 +15,8 @@ const getDbUrl = () => {
   if (url && url.includes("db.peqlupbkjtxlarbmhewm.supabase.co")) {
     // Supabase direct connections are IPv6 only, Vercel requires IPv4.
     // Substitute with the IPv4 transaction pooler URL.
-    url = url.replace(
-      "postgresql://postgres:Qasim%40254922@db.peqlupbkjtxlarbmhewm.supabase.co:5432/postgres",
-      "postgresql://postgres.peqlupbkjtxlarbmhewm:Qasim%40254922@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres"
-    );
+    url = url.replace("db.peqlupbkjtxlarbmhewm.supabase.co:5432", "aws-0-ap-northeast-1.pooler.supabase.com:6543");
+    url = url.replace("postgresql://postgres:", "postgresql://postgres.peqlupbkjtxlarbmhewm:");
   }
   return url;
 };
