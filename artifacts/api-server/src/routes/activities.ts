@@ -8,6 +8,7 @@ const router = Router();
 router.get("/", async (req: any, res: any): Promise<void> => {
   try {
     const activities = await db.select().from(activitiesTable).orderBy(activitiesTable.id);
+    activities.push({ id: 999, slug: "test-debug", title: "Debug Cache Test", priceAed: 1234 } as any);
     res.json(activities);
   } catch (error) {
     console.error("Error fetching activities:", error);
