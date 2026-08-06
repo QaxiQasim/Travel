@@ -5,8 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Clock, Calendar, User, Phone, CheckCircle2, XCircle } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://peqlupbkjtxlarbmhewm.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'dummy_key';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function BookingsModule() {

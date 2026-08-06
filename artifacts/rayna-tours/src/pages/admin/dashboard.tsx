@@ -7,8 +7,8 @@ import ChauffeurModule from '../../components/admin/ChauffeurModule'
 import BookingsModule from '../../components/admin/BookingsModule'
 import UsersModule from '../../components/admin/UsersModule'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://peqlupbkjtxlarbmhewm.supabase.co';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'dummy_key';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function AdminDashboard() {

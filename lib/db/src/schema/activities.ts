@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 
 export const activitiesTable = pgTable("activities", {
   id: uuid("id").primaryKey().defaultRandom(),
+  slug: text("slug").notNull(),
   name: text("name").notNull(),
   description: text("description"),
   category: text("category"),
