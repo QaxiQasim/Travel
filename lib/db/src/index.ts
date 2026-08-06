@@ -12,19 +12,23 @@ if (!process.env.DATABASE_URL) {
 
 const getDbUrl = () => {
   let url = process.env.DATABASE_URL;
-  if (url && url.includes("db.peqlupbkjtxlarbmhewm.supabase.co")) {
-    // Supabase direct connections are IPv6 only, Vercel requires IPv4.
-    // Substitute with the IPv4 transaction pooler URL.
+  if (!url) return undefined;
+  
+  // Fix unencoded '@' in password if present
+  if (url.includes('Qasim@254922')) {
+    url = url.replace('Qasim@254922', 'Qasim%40254922');
+  }
+
+  if (url.includes("db.peqlupbkjtxlarbmhewm.supabase.co")) {
     url = url.replace("db.peqlupbkjtxlarbmhewm.supabase.co:5432", "aws-0-ap-northeast-1.pooler.supabase.com:6543");
     url = url.replace("postgresql://postgres:", "postgresql://postgres.peqlupbkjtxlarbmhewm:");
   }
+  
   return url;
 };
 
-const dbUrl = getDbUrl();
-
-export const pool = dbUrl 
-  ? new Pool({ connectionString: dbUrl }) 
+export const pool = getDbUrl() 
+  ? new Pool({ connectionString: getDbUrl() }) 
   : null;
 export const db = pool ? drizzle(pool, { schema }) : null as any;
 
