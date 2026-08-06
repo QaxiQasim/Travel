@@ -54,7 +54,6 @@ export default function AdminDashboard() {
 }
 
 function ActivitiesTab() {
-  const queryClient = useQueryClient()
   const { data: activities, isLoading } = useQuery({
     queryKey: ['admin-activities'],
     queryFn: async () => {
@@ -63,56 +62,80 @@ function ActivitiesTab() {
     }
   })
 
-  const mutation = useMutation({
-    mutationFn: async ({ id, priceAed, imageUrl }: any) => {
-      const res = await fetch(`/api/activities/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ priceAed, imageUrl })
-      })
-      return res.json()
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-activities'] })
-  })
-
   if (isLoading) return <div>Loading activities...</div>
 
   return (
     <div className="space-y-4">
       {activities?.map((activity: any) => (
-        <div key={activity.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex items-center justify-between">
-          <div className="flex-1">
-            <h3 className="font-semibold text-lg">{activity.title}</h3>
-            <p className="text-sm text-gray-500">{activity.category}</p>
-          </div>
-          <div className="flex space-x-4 items-center">
-            <div>
-              <span className="text-xs text-gray-500 block mb-1">Price (AED)</span>
-              <Input 
-                type="number" 
-                defaultValue={activity.priceAed} 
-                className="w-24"
-                onBlur={(e) => mutation.mutate({ id: activity.id, priceAed: parseInt(e.target.value) })}
-              />
-            </div>
-            <div>
-              <span className="text-xs text-gray-500 block mb-1">Main Image URL</span>
-              <Input 
-                type="text" 
-                defaultValue={activity.imageUrl} 
-                className="w-48"
-                onBlur={(e) => mutation.mutate({ id: activity.id, imageUrl: e.target.value })}
-              />
-            </div>
-          </div>
-        </div>
+        <ActivityRow key={activity.id} activity={activity} />
       ))}
     </div>
   )
 }
 
-function ChauffeurTab() {
+function ActivityRow({ activity }: { activity: any }) {
   const queryClient = useQueryClient()
+  const [priceAed, setPriceAed] = useState(activity.priceAed)
+  const [imageUrl, setImageUrl] = useState(activity.imageUrl || "")
+  
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      const res = await fetch(`/api/activities/${data.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      if (!res.ok) throw new Error("Failed to save")
+      return res.json()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-activities'] })
+      alert("Successfully saved!")
+    },
+    onError: () => {
+      alert("Failed to save changes.")
+    }
+  })
+
+  const hasChanges = priceAed !== activity.priceAed || imageUrl !== (activity.imageUrl || "");
+
+  return (
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex-1">
+        <h3 className="font-semibold text-lg">{activity.title}</h3>
+        <p className="text-sm text-gray-500">{activity.category}</p>
+      </div>
+      <div className="flex space-x-4 items-end">
+        <div>
+          <span className="text-xs text-gray-500 block mb-1">Price (AED)</span>
+          <Input 
+            type="number" 
+            value={priceAed} 
+            onChange={(e) => setPriceAed(parseInt(e.target.value) || 0)}
+            className="w-24"
+          />
+        </div>
+        <div>
+          <span className="text-xs text-gray-500 block mb-1">Main Image URL</span>
+          <Input 
+            type="text" 
+            value={imageUrl} 
+            onChange={(e) => setImageUrl(e.target.value)}
+            className="w-48"
+          />
+        </div>
+        <Button 
+          disabled={!hasChanges || mutation.isPending} 
+          onClick={() => mutation.mutate({ id: activity.id, priceAed, imageUrl })}
+        >
+          {mutation.isPending ? "Saving..." : "Save"}
+        </Button>
+      </div>
+    </div>
+  )
+}
+
+function ChauffeurTab() {
   const { data: rates, isLoading } = useQuery({
     queryKey: ['admin-chauffeur-rates'],
     queryFn: async () => {
@@ -121,41 +144,65 @@ function ChauffeurTab() {
     }
   })
 
-  const mutation = useMutation({
-    mutationFn: async ({ id, transferPrice }: any) => {
-      const res = await fetch(`/api/chauffeur-rates/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ transferPrice })
-      })
-      return res.json()
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin-chauffeur-rates'] })
-  })
-
   if (isLoading) return <div>Loading rates...</div>
 
   return (
     <div className="space-y-4">
       {rates?.map((rate: any) => (
-        <div key={rate.id} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex items-center justify-between">
-          <div className="flex-1">
-            <h3 className="font-semibold text-lg">{rate.vehicleName}</h3>
-            <p className="text-sm text-gray-500">Pax: {rate.pax} | Luggage: {rate.luggage}</p>
-          </div>
-          <div className="flex space-x-4 items-center">
-            <div>
-              <span className="text-xs text-gray-500 block mb-1">Transfer Price (AED)</span>
-              <Input 
-                type="number" 
-                defaultValue={rate.transferPrice} 
-                className="w-24"
-                onBlur={(e) => mutation.mutate({ id: rate.id, transferPrice: parseInt(e.target.value) })}
-              />
-            </div>
-          </div>
-        </div>
+        <ChauffeurRow key={rate.id} rate={rate} />
       ))}
+    </div>
+  )
+}
+
+function ChauffeurRow({ rate }: { rate: any }) {
+  const queryClient = useQueryClient()
+  const [transferPrice, setTransferPrice] = useState(rate.transferPrice)
+  
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      const res = await fetch(`/api/chauffeur-rates/${data.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      if (!res.ok) throw new Error("Failed to save")
+      return res.json()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-chauffeur-rates'] })
+      alert("Successfully saved!")
+    },
+    onError: () => {
+      alert("Failed to save changes.")
+    }
+  })
+
+  const hasChanges = transferPrice !== rate.transferPrice;
+
+  return (
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="flex-1">
+        <h3 className="font-semibold text-lg">{rate.vehicleName}</h3>
+        <p className="text-sm text-gray-500">Pax: {rate.pax} | Luggage: {rate.luggage}</p>
+      </div>
+      <div className="flex space-x-4 items-end">
+        <div>
+          <span className="text-xs text-gray-500 block mb-1">Transfer Price (AED)</span>
+          <Input 
+            type="number" 
+            value={transferPrice} 
+            onChange={(e) => setTransferPrice(parseInt(e.target.value) || 0)}
+            className="w-24"
+          />
+        </div>
+        <Button 
+          disabled={!hasChanges || mutation.isPending} 
+          onClick={() => mutation.mutate({ id: rate.id, transferPrice })}
+        >
+          {mutation.isPending ? "Saving..." : "Save"}
+        </Button>
+      </div>
     </div>
   )
 }
