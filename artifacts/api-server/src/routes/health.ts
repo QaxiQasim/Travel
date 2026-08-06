@@ -8,7 +8,8 @@ router.get("/", (req: any, res: any) => {
   res.json({ 
     status: "ok", 
     timestamp: new Date().toISOString(),
-    dbUrlPrefix: url.substring(0, 30)
+    dbUrlPrefix: url.substring(0, 30),
+    testDebug: "test-debug"
   });
 });
 
