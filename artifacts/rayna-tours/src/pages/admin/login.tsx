@@ -8,7 +8,7 @@ import { Map, Lock, User, Activity, Mail } from 'lucide-react'
 
 // You should normally put these in your .env
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://peqlupbkjtxlarbmhewm.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'dummy_key';
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable_VOeStgAWq2bicW-Gzw5faQ_4fbYGRAe';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export default function AdminLogin() {
