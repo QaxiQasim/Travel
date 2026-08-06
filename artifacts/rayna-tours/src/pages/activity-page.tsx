@@ -32,7 +32,8 @@ const imageMap: Record<string, string> = {
   'car-rental': imgCar,
 }
 
-import { activities, packages } from '@/data/mockData'
+import { useQuery } from '@tanstack/react-query'
+// import { activities, packages } from '@/data/mockData' // Removed mock data
 
 export default function ActivityPage() {
   const params = useParams()
@@ -45,9 +46,28 @@ export default function ActivityPage() {
   const pathSlug = window.location.pathname.replace(/^\//, '')
   const slug = params.slug || pathSlug
 
-  const activity = activities.find(a => a.slug === slug) || packages.find(p => p.slug === slug)
-  const isLoading = false
-  const isError = false
+  const { data: dbActivities = [], isLoading, isError } = useQuery({
+    queryKey: ['activities'],
+    queryFn: async () => {
+      const res = await fetch('/api/activities')
+      if (!res.ok) throw new Error('Failed to fetch')
+      return res.json()
+    }
+  })
+
+  let activity = dbActivities.find((a: any) => a.slug === slug)
+  
+  if (activity) {
+    activity = {
+      ...activity,
+      options: activity.packages?.map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        priceAed: Number(p.price),
+        description: p.description
+      })) || []
+    }
+  }
 
   // Fallback data if API doesn't have this specific activity
   const displayData = activity || {
