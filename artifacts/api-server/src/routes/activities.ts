@@ -10,11 +10,27 @@ router.get("/", async (req: any, res: any): Promise<void> => {
     const activitiesList = await db.select().from(activitiesTable).orderBy(activitiesTable.createdAt);
     const packagesList = await db.select().from(activityPackagesTable);
 
-    // Group packages by activity
-    const activitiesWithPackages = activitiesList.map(activity => ({
-      ...activity,
-      packages: packagesList.filter(p => p.activityId === activity.id)
-    }));
+    // Group packages by activity and map to frontend expected format
+    const activitiesWithPackages = activitiesList.map(activity => {
+      const pkgs = packagesList.filter(p => p.activityId === activity.id);
+      let minPrice = 0;
+      if (pkgs.length > 0) {
+        minPrice = Math.min(...pkgs.map(p => Number(p.price) || 0));
+      }
+      return {
+        ...activity,
+        packages: pkgs,
+        // Map fields expected by frontend
+        title: activity.name,
+        shortDescription: activity.description,
+        imageUrl: activity.coverImageUrl,
+        priceAed: minPrice,
+        rating: "4.8",
+        reviewCount: "124",
+        duration: "4 Hours",
+        inclusions: ["Pick & Drop", "Professional Guide", "Refreshments"]
+      };
+    });
 
     res.json(activitiesWithPackages);
   } catch (error) {
