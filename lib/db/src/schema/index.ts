@@ -17,7 +17,8 @@
 //   export type InsertPost = z.infer<typeof insertPostSchema>;
 //   export type Post = typeof postsTable.$inferSelect;
 
-export * from "./enquiries.js";
 export * from "./activities.js";
-export * from "./chauffeur_rates.js";
-export * from "./admin_users.js";
+export * from "./activity_packages.js";
+export * from "./chauffeur.js";
+export * from "./bookings.js";
+export * from "./dashboard_users.js";
