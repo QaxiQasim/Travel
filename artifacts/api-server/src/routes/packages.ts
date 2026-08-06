@@ -41,22 +41,6 @@ router.get("/packages/:slug", async (req: any, res: any): Promise<void> => {
   res.json(pkg);
 });
 
-// GET /activities — list all activities
-router.get("/activities", async (_req: any, res: any): Promise<void> => {
-  res.json(activities);
-});
-
-// GET /activities/:slug — get a specific activity
-router.get("/activities/:slug", async (req: any, res: any): Promise<void> => {
-  const { slug } = req.params;
-  const activity = activities.find((a) => a.slug === slug);
-  if (!activity) {
-    res.status(404).json({ error: "Activity not found" });
-    return;
-  }
-  res.json(activity);
-});
-
 // GET /testimonials — get customer testimonials
 router.get("/testimonials", async (_req: any, res: any): Promise<void> => {
   res.json(testimonials);

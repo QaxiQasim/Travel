@@ -27,8 +27,14 @@ const getDbUrl = () => {
   return url;
 };
 
-export const pool = getDbUrl() 
-  ? new Pool({ connectionString: getDbUrl() }) 
+const dbUrl = getDbUrl();
+const isPooler = dbUrl && dbUrl.includes("pooler.supabase.com");
+
+export const pool = dbUrl 
+  ? new Pool({ 
+      connectionString: dbUrl,
+      ...(isPooler ? { ssl: { rejectUnauthorized: false } } : {})
+    }) 
   : null;
 export const db = pool ? drizzle(pool, { schema }) : null as any;
 
