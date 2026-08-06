@@ -84,6 +84,7 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
+      queryClient.invalidateQueries({ queryKey: ['activities'] });
       // In a real app we might show a toast here
     }
   });
