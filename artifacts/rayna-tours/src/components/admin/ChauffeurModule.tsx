@@ -98,9 +98,10 @@ export default function ChauffeurModule() {
   );
 }
 
-function VehicleDetailView({ vehicle, locations, pricing, onBack }: { vehicle: any, locations: any[], pricing: any[], onBack: () => void }) {
-  const queryClient = useQueryClient();
+const VehicleDetailView = ({ vehicle, locations, pricing, onBack }: any) => {
   const [localPricing, setLocalPricing] = useState<any[]>(pricing);
+  const queryClient = useQueryClient();
+  const [selectedFromId, setSelectedFromId] = useState<string>(locations[0]?.id || '');
 
   const mutation = useMutation({
     mutationFn: async (payload: any) => {
@@ -117,37 +118,39 @@ function VehicleDetailView({ vehicle, locations, pricing, onBack }: { vehicle: a
     }
   });
 
-  const getPrice = (locationId: string) => {
-    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.locationId === locationId);
+  const getPrice = (toLocId: string) => {
+    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.fromLocationId === selectedFromId && pr.toLocationId === toLocId);
     return p ? p.price : '';
   };
 
-  const isDirty = (locationId: string) => {
-    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.locationId === locationId);
+  const isDirty = (toLocId: string) => {
+    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.fromLocationId === selectedFromId && pr.toLocationId === toLocId);
     return p?._isDirty;
   };
 
-  const updatePriceLocal = (locationId: string, val: string) => {
+  const updatePriceLocal = (toLocId: string, val: string) => {
     const num = parseFloat(val);
-    if (isNaN(num)) return;
+    if (isNaN(num) && val !== '') return;
     
     setLocalPricing(prev => {
-      const existing = prev.find(p => p.vehicleId === vehicle.id && p.locationId === locationId);
+      const existing = prev.find(p => p.vehicleId === vehicle.id && p.fromLocationId === selectedFromId && p.toLocationId === toLocId);
       if (existing) {
-        return prev.map(p => p.id === existing.id ? { ...p, price: num, _isDirty: true } : p);
+        return prev.map(p => p.id === existing.id ? { ...p, price: val === '' ? 0 : num, _isDirty: true } : p);
       } else {
-        return [...prev, { id: 'temp-'+Date.now(), vehicleId: vehicle.id, locationId, price: num, _isDirty: true }];
+        return [...prev, { id: 'temp-'+Date.now(), vehicleId: vehicle.id, fromLocationId: selectedFromId, toLocationId: toLocId, price: val === '' ? 0 : num, _isDirty: true }];
       }
     });
   };
 
-  const savePrice = (locationId: string) => {
-    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.locationId === locationId);
+  const savePrice = (toLocId: string) => {
+    const p = localPricing.find(pr => pr.vehicleId === vehicle.id && pr.fromLocationId === selectedFromId && pr.toLocationId === toLocId);
     if (p) {
-      mutation.mutate({ vehicleId: vehicle.id, locationId, price: p.price });
+      mutation.mutate({ vehicleId: vehicle.id, fromLocationId: selectedFromId, toLocationId: toLocId, price: p.price });
       setLocalPricing(prev => prev.map(pr => pr.id === p.id ? { ...pr, _isDirty: false } : pr));
     }
   };
+
+  const toLocations = locations.filter((l: any) => l.id !== selectedFromId);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
@@ -157,23 +160,34 @@ function VehicleDetailView({ vehicle, locations, pricing, onBack }: { vehicle: a
         </Button>
         <div>
           <h2 className="text-2xl font-bold text-white">{vehicle.vehicleType}</h2>
-          <p className="text-text-muted">Manage pricing for this vehicle across all locations</p>
+          <p className="text-text-muted">Manage pricing for this vehicle across all routes</p>
         </div>
       </div>
 
       <div className="bg-surface border border-border rounded-xl p-6">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-lg font-semibold text-white">Location Pricing</h3>
+          <div className="flex items-center gap-4">
+            <h3 className="text-lg font-semibold text-white">Route Pricing</h3>
+            <select 
+              value={selectedFromId} 
+              onChange={e => setSelectedFromId(e.target.value)}
+              className="bg-bg border border-border text-white px-3 py-2 rounded-lg ml-4"
+            >
+              {locations.map((loc: any) => (
+                <option key={loc.id} value={loc.id}>From: {loc.locationName}</option>
+              ))}
+            </select>
+          </div>
           <Button size="sm" className="bg-white/10 hover:bg-white/20 text-white border border-white/10">
-            <Plus className="w-4 h-4 mr-2" /> Add Location
+            <Plus className="w-4 h-4 mr-2" /> Add Route
           </Button>
         </div>
 
         <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
-          {locations.map(loc => (
+          {toLocations.map((loc: any) => (
             <div key={loc.id} className="bg-bg border border-border rounded-lg p-4 flex flex-col lg:flex-row gap-6 items-start lg:items-center">
               <div className="flex-1">
-                <h4 className="text-lg font-semibold text-white">{loc.locationName}</h4>
+                <h4 className="text-lg font-semibold text-white">To: {loc.locationName}</h4>
               </div>
               
               <div className="flex items-center gap-4 w-full lg:w-auto">
@@ -203,13 +217,13 @@ function VehicleDetailView({ vehicle, locations, pricing, onBack }: { vehicle: a
               </div>
             </div>
           ))}
-          {locations.length === 0 && (
+          {toLocations.length === 0 && (
             <div className="text-center py-8 text-text-muted border border-dashed border-border rounded-lg">
-              No locations found.
+              No destination locations found.
             </div>
           )}
         </div>
       </div>
     </div>
   );
-}
+};

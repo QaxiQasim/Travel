@@ -16,7 +16,8 @@ export const chauffeurLocationsTable = pgTable("chauffeur_locations", {
 export const chauffeurPricingTable = pgTable("chauffeur_pricing", {
   id: uuid("id").primaryKey().defaultRandom(),
   vehicleId: uuid("vehicle_id").references(() => chauffeurVehiclesTable.id, { onDelete: 'cascade' }),
-  locationId: uuid("location_id").references(() => chauffeurLocationsTable.id, { onDelete: 'cascade' }),
+  fromLocationId: uuid("from_location_id").references(() => chauffeurLocationsTable.id, { onDelete: 'cascade' }),
+  toLocationId: uuid("to_location_id").references(() => chauffeurLocationsTable.id, { onDelete: 'cascade' }),
   price: numeric("price").notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
 });

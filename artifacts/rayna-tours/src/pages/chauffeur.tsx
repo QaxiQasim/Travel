@@ -6,14 +6,45 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/animations'
-import { transferRates } from '@/data/transferRates'
-import { chauffeurCars, fromLocations, toLocations } from '@/data/chauffeurCars';
+import { transferRates as fallbackTransferRates } from '@/data/transferRates'
+import { chauffeurCars, fromLocations as staticFromLocations, toLocations as staticToLocations } from '@/data/chauffeurCars';
 import { hourlyRates, hourlyPackages } from '@/data/hourlyRates';
+import { useQuery } from '@tanstack/react-query';
 
 import heroBg from '@assets/generated_images/car-rental-dubai.jpg'
 
 export default function ChauffeurPage() {
   const [, setLocation] = useLocation();
+  
+  const { data: dbData } = useQuery({
+    queryKey: ['public-chauffeur'],
+    queryFn: async () => {
+      const res = await fetch('/api/chauffeur');
+      return res.json();
+    }
+  });
+
+  const transferRates = React.useMemo(() => {
+    if (!dbData?.pricing) return fallbackTransferRates;
+    const map: any = {};
+    
+    dbData.pricing.forEach((p: any) => {
+      const fromLoc = dbData.locations.find((l: any) => l.id === p.fromLocationId)?.locationName;
+      const toLoc = dbData.locations.find((l: any) => l.id === p.toLocationId)?.locationName;
+      const vehicle = dbData.vehicles.find((v: any) => v.id === p.vehicleId)?.vehicleType;
+
+      if (!fromLoc || !toLoc || !vehicle) return;
+
+      if (!map[fromLoc]) map[fromLoc] = {};
+      if (!map[fromLoc][toLoc]) map[fromLoc][toLoc] = {};
+      map[fromLoc][toLoc][vehicle] = Number(p.price);
+    });
+
+    return Object.keys(map).length > 0 ? map : fallbackTransferRates;
+  }, [dbData]);
+
+  const fromLocations = React.useMemo(() => Object.keys(transferRates), [transferRates]);
+
   const [serviceType, setServiceType] = useState<'transfer' | 'hourly'>('transfer');
   
   // Transfer States

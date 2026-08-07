@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { db, eq } from "@workspace/db";
+import { db } from "@workspace/db";
+import { eq, and } from "drizzle-orm";
 import { chauffeurVehiclesTable, chauffeurLocationsTable, chauffeurPricingTable } from "@workspace/db/schema";
 
 const router = Router();
@@ -86,12 +87,15 @@ router.post("/locations", async (req: any, res: any): Promise<void> => {
 // Upsert pricing
 router.put("/pricing", async (req: any, res: any): Promise<void> => {
   try {
-    const { vehicleId, locationId, price } = req.body;
+    const { vehicleId, fromLocationId, toLocationId, price } = req.body;
     
     // Check if exists
     const existing = await db.select().from(chauffeurPricingTable)
-      .where(eq(chauffeurPricingTable.vehicleId, vehicleId))
-      .where(eq(chauffeurPricingTable.locationId, locationId));
+      .where(and(
+        eq(chauffeurPricingTable.vehicleId, vehicleId),
+        eq(chauffeurPricingTable.fromLocationId, fromLocationId),
+        eq(chauffeurPricingTable.toLocationId, toLocationId)
+      ));
 
     let result;
     if (existing.length > 0) {
@@ -101,7 +105,7 @@ router.put("/pricing", async (req: any, res: any): Promise<void> => {
         .returning();
     } else {
       [result] = await db.insert(chauffeurPricingTable)
-        .values({ vehicleId, locationId, price })
+        .values({ vehicleId, fromLocationId, toLocationId, price })
         .returning();
     }
 
