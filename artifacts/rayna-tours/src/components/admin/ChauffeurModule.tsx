@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Car, Plus, Settings2, Trash2 } from 'lucide-react';
+import { chauffeurCars } from '@/data/chauffeurCars';
 
 export default function ChauffeurModule() {
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
@@ -54,31 +55,36 @@ export default function ChauffeurModule() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {vehicles.map((vehicle: any) => (
-          <div 
-            key={vehicle.id} 
-            className="bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group flex flex-col"
-            onClick={() => setSelectedVehicle(vehicle)}
-          >
-            <div className="aspect-video w-full bg-border/50 relative overflow-hidden flex items-center justify-center">
-              {vehicle.imageUrl ? (
-                <img src={vehicle.imageUrl} alt={vehicle.vehicleType} className="w-full h-full object-cover" />
-              ) : (
-                <Car className="w-10 h-10 text-text-muted" />
-              )}
-            </div>
-            <div className="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 className="font-semibold text-lg text-white mb-1 group-hover:text-primary transition-colors">{vehicle.vehicleType}</h3>
-                <p className="text-sm text-text-muted line-clamp-2">Capacity: {vehicle.capacity} Pax, {vehicle.luggage} Luggage</p>
+        {vehicles.map((vehicle: any) => {
+          const mockCar = chauffeurCars.find(c => c.name === vehicle.vehicleType);
+          const img = vehicle.imageUrl || mockCar?.image;
+          
+          return (
+            <div 
+              key={vehicle.id} 
+              className="bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group flex flex-col"
+              onClick={() => setSelectedVehicle(vehicle)}
+            >
+              <div className="aspect-video w-full bg-border/50 relative overflow-hidden flex items-center justify-center">
+                {img ? (
+                  <img src={img} alt={vehicle.vehicleType} className="w-full h-full object-cover" />
+                ) : (
+                  <Car className="w-10 h-10 text-text-muted" />
+                )}
               </div>
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-semibold text-lg text-white mb-1 group-hover:text-primary transition-colors">{vehicle.vehicleType}</h3>
+                  <p className="text-sm text-text-muted line-clamp-2">Capacity: {mockCar?.pax || 4} Pax, {mockCar?.luggage || 3} Luggage</p>
+                </div>
               <div className="mt-4 pt-4 border-t border-border flex justify-between items-center text-sm">
                 <span className="text-success">Active</span>
                 <Settings2 className="w-4 h-4 text-text-muted group-hover:text-white transition-colors" />
               </div>
             </div>
           </div>
-        ))}
+        );
+      })}
         {vehicles.length === 0 && (
           <div className="col-span-full text-center py-12 bg-surface border border-dashed border-border rounded-xl">
             <Car className="w-12 h-12 text-text-muted mx-auto mb-4" />

@@ -19,7 +19,7 @@ export default function ChauffeurPage() {
   const { data: dbData } = useQuery({
     queryKey: ['public-chauffeur'],
     queryFn: async () => {
-      const res = await fetch('/api/chauffeur');
+      const res = await fetch('/api/chauffeur', { cache: 'no-store' });
       return res.json();
     }
   });
