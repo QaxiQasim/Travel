@@ -103,14 +103,24 @@ export default function BookingsModule() {
                     <span className="text-text-muted text-xs mt-1 flex items-center gap-2">
                       <Phone className="w-3 h-3" /> {booking.phone}
                     </span>
+                    {booking.email && (
+                      <span className="text-text-muted text-xs mt-1 flex items-center gap-2">
+                        <span className="w-3 h-3 flex items-center justify-center">@</span> {booking.email}
+                      </span>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex flex-col">
-                    <span className="text-white capitalize">{booking.serviceType}</span>
-                    <span className="text-text-muted text-xs mt-1 truncate max-w-[200px]">
-                      {booking.serviceType === 'chauffeur' ? booking.location : 'Package ID: ' + booking.packageId}
+                  <div className="flex flex-col gap-1">
+                    <span className="text-white font-medium capitalize">{booking.serviceType}</span>
+                    <span className="text-text-muted text-xs">
+                      {booking.location}
                     </span>
+                    {booking.notes && (
+                      <span className="text-text-muted text-xs whitespace-pre-wrap mt-1 opacity-80">
+                        {booking.notes}
+                      </span>
+                    )}
                   </div>
                 </td>
                 <td className="px-6 py-4">
