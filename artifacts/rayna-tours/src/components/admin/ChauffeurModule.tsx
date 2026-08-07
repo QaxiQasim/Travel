@@ -18,11 +18,12 @@ export default function ChauffeurModule() {
 
   const seedMutation = useMutation({
     mutationFn: async () => {
-      // In a real scenario, this would call an API endpoint to seed data.
-      // Since we don't have a dedicated seed endpoint, the backend could handle it,
-      // but for this UI, we'll just show the cards. If they want to add cars, they can use the UI (if implemented)
-      // or we can just rely on the API. 
-      return true;
+      const res = await fetch('/api/chauffeur/seed', { method: 'POST' });
+      if (!res.ok) throw new Error('Failed to seed');
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-chauffeur'] });
     }
   });
 
@@ -83,7 +84,13 @@ export default function ChauffeurModule() {
             <Car className="w-12 h-12 text-text-muted mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-white mb-2">No Vehicles Found</h3>
             <p className="text-text-muted mb-4">You need to add vehicles to the database to manage pricing.</p>
-            <p className="text-xs text-text-muted">Note: Please create an API seed script or use the Add Vehicle button to populate.</p>
+            <Button 
+              onClick={() => seedMutation.mutate()} 
+              disabled={seedMutation.isPending}
+              className="bg-primary hover:bg-primary/90 text-white"
+            >
+              {seedMutation.isPending ? "Seeding Database..." : "Seed Database with Initial Cars"}
+            </Button>
           </div>
         )}
       </div>

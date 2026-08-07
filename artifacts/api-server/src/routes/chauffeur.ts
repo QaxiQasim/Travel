@@ -4,6 +4,43 @@ import { chauffeurVehiclesTable, chauffeurLocationsTable, chauffeurPricingTable 
 
 const router = Router();
 
+// Seed the database with default chauffeur vehicles and locations
+router.post("/seed", async (req: any, res: any): Promise<void> => {
+  try {
+    const existing = await db.select().from(chauffeurVehiclesTable);
+    if (existing.length > 0) {
+      res.json({ message: "Already seeded" });
+      return;
+    }
+
+    const defaultVehicles = [
+      { vehicleType: "Lexus ES300", capacity: 3, luggage: 3 },
+      { vehicleType: "Kia Carnival", capacity: 6, luggage: 5 },
+      { vehicleType: "Audi A6", capacity: 3, luggage: 3 },
+      { vehicleType: "Mercedes V Class", capacity: 7, luggage: 6 },
+      { vehicleType: "GMC SUV", capacity: 7, luggage: 6 },
+      { vehicleType: "Mercedes Sprinter", capacity: 19, luggage: 15 },
+      { vehicleType: "Rolls Royce Ghost", capacity: 3, luggage: 3 },
+    ];
+
+    const defaultLocations = [
+      { locationName: "Dubai Airport" },
+      { locationName: "Dubai Hotel" },
+      { locationName: "Abu Dhabi" },
+      { locationName: "Sharjah" },
+      { locationName: "Ras Al Khaimah" }
+    ];
+
+    await db.insert(chauffeurVehiclesTable).values(defaultVehicles);
+    await db.insert(chauffeurLocationsTable).values(defaultLocations);
+
+    res.json({ message: "Seeded successfully" });
+  } catch (error) {
+    console.error("Error seeding chauffeur DB:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // Get the full chauffeur matrix
 router.get("/", async (req: any, res: any): Promise<void> => {
   try {
