@@ -44,9 +44,11 @@ router.post("/", async (req: any, res: any): Promise<void> => {
   try {
     const { name, description, category, coverImageUrl, packages } = req.body;
     
+    const slug = req.body.slug || (name || 'new-activity').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
+
     // Insert activity
     const [newActivity] = await db.insert(activitiesTable)
-      .values({ name, description, category, coverImageUrl })
+      .values({ slug, name, description, category, coverImageUrl })
       .returning();
 
     // Insert packages if any
