@@ -62,19 +62,25 @@ export default function ChauffeurModule() {
           return (
             <div 
               key={vehicle.id} 
-              className="bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors cursor-pointer group flex flex-col"
+              className="bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 cursor-pointer group flex flex-col hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1"
               onClick={() => setSelectedVehicle(vehicle)}
             >
               <div className="aspect-video w-full bg-border/50 relative overflow-hidden flex items-center justify-center">
                 {img ? (
-                  <img src={img} alt={vehicle.vehicleType} className="w-full h-full object-cover" />
+                  <img src={img} alt={vehicle.vehicleType} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 ) : (
-                  <Car className="w-10 h-10 text-text-muted" />
+                  <Car className="w-10 h-10 text-text-muted transition-transform duration-500 group-hover:scale-125 group-hover:text-primary" />
                 )}
+                
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                  <span className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-medium translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg flex items-center gap-2">
+                    <Settings2 className="w-4 h-4" /> Manage
+                  </span>
+                </div>
               </div>
-              <div className="p-5 flex-1 flex flex-col justify-between">
+              <div className="p-5 flex-1 flex flex-col justify-between relative bg-surface z-10">
                 <div>
-                  <h3 className="font-semibold text-lg text-white mb-1 group-hover:text-primary transition-colors">{vehicle.vehicleType}</h3>
+                  <h3 className="font-bold text-lg text-white mb-2 group-hover:text-primary transition-colors">{vehicle.vehicleType}</h3>
                   <p className="text-sm text-text-muted line-clamp-2">Capacity: {mockCar?.pax || 4} Pax, {mockCar?.luggage || 3} Luggage</p>
                 </div>
               <div className="mt-4 pt-4 border-t border-border flex justify-between items-center text-sm">
