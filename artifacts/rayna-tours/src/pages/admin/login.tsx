@@ -53,13 +53,11 @@ export default function AdminLogin() {
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_center,_var(--color-primary)_0%,_transparent_70%)]" />
         
         <div className="z-10 text-center max-w-md">
-          <Map className="w-16 h-16 text-primary mx-auto mb-6" />
-          <h1 className="text-4xl font-serif text-white mb-4">Dubai Classic Travel</h1>
+          <img src="/logo.png" alt="DONNVAY" className="h-16 w-auto object-contain mx-auto mb-6" style={{ filter: 'brightness(0) invert(1)' }} />
           <p className="text-text-muted text-lg">
             Destination Management Control Panel. Sign in to manage activities, chauffeur matrices, and customer bookings seamlessly.
           </p>
         </div>
-      </div>
 
       {/* Right Pane - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-bg">

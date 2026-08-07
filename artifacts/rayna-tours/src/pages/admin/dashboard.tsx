@@ -42,9 +42,8 @@ export default function AdminDashboard() {
     <div className="flex h-screen bg-bg text-text overflow-hidden">
       {/* Sidebar Navigation */}
       <div className="w-64 bg-surface border-r border-border flex flex-col flex-shrink-0">
-        <div className="p-6 border-b border-border flex items-center gap-3">
-          <Map className="w-8 h-8 text-primary" />
-          <h2 className="text-xl font-serif text-white font-semibold">Dubai Classic</h2>
+        <div className="flex items-center mb-10 px-6 py-6 border-b border-border">
+          <img src="/logo.png" alt="DONNVAY" className="h-10 w-auto object-contain" style={{ filter: 'brightness(0) invert(1)' }} />
         </div>
         
         <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
