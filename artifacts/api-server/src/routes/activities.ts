@@ -75,13 +75,14 @@ router.post("/", async (req: any, res: any): Promise<void> => {
 router.patch("/:id", async (req: any, res: any): Promise<void> => {
   try {
     const { id } = req.params;
-    const { name, description, category, coverImageUrl, isActive } = req.body;
+    const { name, description, category, coverImageUrl, images, isActive } = req.body;
     
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (description !== undefined) updateData.description = description;
     if (category !== undefined) updateData.category = category;
     if (coverImageUrl !== undefined) updateData.coverImageUrl = coverImageUrl;
+    if (images !== undefined) updateData.images = images;
     if (isActive !== undefined) updateData.isActive = isActive;
 
     const [updated] = await db.update(activitiesTable)

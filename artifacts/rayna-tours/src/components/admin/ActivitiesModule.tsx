@@ -118,6 +118,41 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
   const queryClient = useQueryClient();
   const [packages, setPackages] = useState<any[]>(activity.packages || []);
 
+  const [details, setDetails] = useState({
+    name: activity.name || '',
+    description: activity.description || '',
+    category: activity.category || '',
+    coverImageUrl: activity.coverImageUrl || '',
+    images: activity.images || []
+  });
+  const [detailsDirty, setDetailsDirty] = useState(false);
+
+  const updateDetailsMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const res = await fetch(`/api/activities/${activity.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error("Failed to save");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
+      queryClient.invalidateQueries({ queryKey: ['activities'] });
+      setDetailsDirty(false);
+    }
+  });
+
+  const handleDetailChange = (field: string, value: any) => {
+    setDetails(prev => ({ ...prev, [field]: value }));
+    setDetailsDirty(true);
+  };
+
+  const saveDetails = () => {
+    updateDetailsMutation.mutate(details);
+  };
+
   const mutation = useMutation({
     mutationFn: async (pkgData: any) => {
       const res = await fetch(`/api/activities/packages/${pkgData.id}`, {
@@ -171,8 +206,51 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
           ← Back
         </Button>
         <div>
-          <h2 className="text-2xl font-bold text-white">{activity.name}</h2>
-          <p className="text-text-muted">{activity.category || 'Uncategorized'}</p>
+          <h2 className="text-2xl font-bold text-white">{details.name || activity.name}</h2>
+          <p className="text-text-muted">{details.category || activity.category || 'Uncategorized'}</p>
+        </div>
+      </div>
+
+      <div className="bg-surface border border-border rounded-xl p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-lg font-semibold text-white">Activity Details & Images</h3>
+          <Button 
+            size="sm" 
+            onClick={saveDetails}
+            disabled={!detailsDirty || updateDetailsMutation.isPending}
+            className="bg-success/20 text-success hover:bg-success/30 border border-success/30"
+          >
+            {updateDetailsMutation.isPending ? "Saving..." : "Save Details"}
+          </Button>
+        </div>
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <span className="text-xs text-text-muted block mb-1">Name</span>
+              <Input value={details.name} onChange={(e) => handleDetailChange('name', e.target.value)} className="bg-bg border-border text-white" />
+            </div>
+            <div>
+              <span className="text-xs text-text-muted block mb-1">Category</span>
+              <Input value={details.category} onChange={(e) => handleDetailChange('category', e.target.value)} className="bg-bg border-border text-white" />
+            </div>
+            <div className="md:col-span-2">
+              <span className="text-xs text-text-muted block mb-1">Description</span>
+              <Input value={details.description} onChange={(e) => handleDetailChange('description', e.target.value)} className="bg-bg border-border text-white" />
+            </div>
+            <div className="md:col-span-2">
+              <span className="text-xs text-text-muted block mb-1">Cover Image URL</span>
+              <Input value={details.coverImageUrl} onChange={(e) => handleDetailChange('coverImageUrl', e.target.value)} placeholder="/assets/generated_images/example.jpg" className="bg-bg border-border text-white" />
+            </div>
+            <div className="md:col-span-2">
+              <span className="text-xs text-text-muted block mb-1">Gallery Image URLs (comma separated)</span>
+              <Input 
+                value={details.images.join(', ')} 
+                onChange={(e) => handleDetailChange('images', e.target.value.split(',').map(s => s.trim()).filter(Boolean))} 
+                placeholder="/assets/generated_images/1.jpg, /assets/generated_images/2.jpg" 
+                className="bg-bg border-border text-white" 
+              />
+            </div>
+          </div>
         </div>
       </div>
 

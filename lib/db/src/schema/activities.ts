@@ -9,6 +9,7 @@ export const activitiesTable = pgTable("activities", {
   description: text("description"),
   category: text("category"),
   coverImageUrl: text("cover_image_url"),
+  images: text("images").array(),
   isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
