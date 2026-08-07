@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useMutation } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -33,8 +34,6 @@ interface BookingFormProps {
 export function BookingForm({ activityTitle, activityOrPackage, defaultDate = '', packageOptions }: BookingFormProps) {
   const { toast } = useToast()
   
-  const [isPending, setIsPending] = React.useState(false)
-
   const form = useForm<EnquiryFormValues>({
     resolver: zodResolver(enquirySchema),
     defaultValues: {
@@ -53,22 +52,60 @@ export function BookingForm({ activityTitle, activityOrPackage, defaultDate = ''
     form.setValue('activityOrPackage', activityOrPackage)
   }, [activityOrPackage, form])
 
-  const onSubmit = (data: EnquiryFormValues) => {
-    setIsPending(true)
-    setTimeout(() => {
-      setIsPending(false)
+  const mutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to submit booking')
+      return res.json()
+    },
+    onSuccess: () => {
       toast({
         title: "Enquiry Submitted",
         description: "Our luxury travel concierge will contact you shortly.",
       })
       form.reset({
-        ...data,
+        ...form.getValues(),
         name: '',
         email: '',
         phone: '',
         message: ''
       })
-    }, 1000)
+    },
+    onError: () => {
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your request. Please try again.",
+        variant: "destructive"
+      })
+    }
+  })
+
+  const isPending = mutation.isPending;
+
+  const onSubmit = (data: EnquiryFormValues) => {
+    let totalPrice = undefined;
+    if (packageOptions && packageOptions.length > 0) {
+      const selectedPkg = packageOptions.find(p => p.name === data.activityOrPackage);
+      if (selectedPkg && selectedPkg.priceAed) {
+        totalPrice = selectedPkg.priceAed * data.guests;
+      }
+    }
+
+    mutation.mutate({
+      customerName: data.name,
+      email: data.email,
+      phone: data.phone,
+      serviceType: 'activity',
+      location: activityTitle || 'Activity Inquiry',
+      persons: data.guests,
+      requestedDate: data.travelDate,
+      totalPrice: totalPrice?.toString(),
+      notes: `Package/Activity: ${data.activityOrPackage}\nMessage: ${data.message || 'None'}`
+    })
   }
 
   return (

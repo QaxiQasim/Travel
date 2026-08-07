@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Users, Briefcase, DoorOpen, Settings, CheckCircle, MessageCircle, Info } from 'lucide-react'
 import { FadeIn } from '@/components/animations'
+import { useToast } from '@/hooks/use-toast'
+import { useMutation } from '@tanstack/react-query'
 
 import { chauffeurCars, fromLocations } from '@/data/chauffeurCars'
 import { transferRates } from '@/data/transferRates'
@@ -28,6 +30,37 @@ export default function CarDetailsPage() {
   const [toLocation, setToLocation] = useState<string>('')
   const [selectedPackage, setSelectedPackage] = useState<string>(initialPkg)
   const [activeImage, setActiveImage] = useState<string>('')
+  
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const { toast } = useToast()
+
+  const mutation = useMutation({
+    mutationFn: async (payload: any) => {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      if (!res.ok) throw new Error('Failed to submit booking')
+      return res.json()
+    },
+    onSuccess: () => {
+      toast({
+        title: "Inquiry Submitted",
+        description: "Our team will contact you shortly.",
+      })
+      setName('')
+      setPhone('')
+    },
+    onError: () => {
+      toast({
+        title: "Submission Failed",
+        description: "There was an error submitting your request.",
+        variant: "destructive"
+      })
+    }
+  })
   
   if (!car) {
     return <Layout><div className="py-32 text-center text-2xl">Car not found.</div></Layout>
@@ -59,7 +92,36 @@ export default function CarDetailsPage() {
     } else {
       message += ` Price: AED ${displayPrice}.`;
     }
-    window.open(`https://wa.me/971524204409?text=${encodeURIComponent(message)}`, '_blank')
+    window.open(`https://wa.me/971524204409?text=${encodeURIComponent(message)}`, '_blank');
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !phone) return;
+    
+    let locationDetails = '';
+    if (serviceType === 'transfer') {
+      if (!fromLocation || !toLocation) {
+        toast({ title: "Incomplete", description: "Please select pick-up and drop-off locations.", variant: "destructive" });
+        return;
+      }
+      locationDetails = `Transfer: ${fromLocation} -> ${toLocation}`;
+    } else {
+      if (!selectedPackage) {
+        toast({ title: "Incomplete", description: "Please select a package.", variant: "destructive" });
+        return;
+      }
+      locationDetails = `Hourly Package: ${selectedPackage}`;
+    }
+
+    mutation.mutate({
+      customerName: name,
+      phone: phone,
+      serviceType: 'chauffeur',
+      location: locationDetails,
+      totalPrice: displayPrice?.toString(),
+      notes: `Vehicle: ${car.name}`
+    });
   }
 
   const features = ["Leather Seats", "Chauffeur", "Bottled Water", "Free WiFi"];
@@ -196,7 +258,7 @@ export default function CarDetailsPage() {
 
                   <h3 className="text-xl font-serif mb-6">Booking Inquiry</h3>
                   
-                  <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); alert("Inquiry Submitted successfully! Our team will contact you shortly."); }}>
+                  <form className="space-y-4" onSubmit={handleSubmit}>
                     
                     {serviceType === 'transfer' ? (
                       <>
@@ -246,15 +308,15 @@ export default function CarDetailsPage() {
 
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
-                      <Input id="name" placeholder="John Doe" required className="bg-gray-50 h-11" />
+                      <Input id="name" value={name} onChange={e => setName(e.target.value)} placeholder="John Doe" required className="bg-gray-50 h-11" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" placeholder="+971 50 000 0000" required className="bg-gray-50 h-11" />
+                      <Input id="phone" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+971 50 000 0000" required className="bg-gray-50 h-11" />
                     </div>
                     
-                    <Button type="submit" className="w-full h-12 bg-black text-white hover:bg-primary hover:text-black uppercase tracking-widest text-sm font-semibold mt-4 transition-all duration-300">
-                      Submit Inquiry
+                    <Button disabled={mutation.isPending} type="submit" className="w-full h-12 bg-black text-white hover:bg-primary hover:text-black uppercase tracking-widest text-sm font-semibold mt-4 transition-all duration-300">
+                      {mutation.isPending ? "Submitting..." : "Submit Inquiry"}
                     </Button>
                   </form>
 
