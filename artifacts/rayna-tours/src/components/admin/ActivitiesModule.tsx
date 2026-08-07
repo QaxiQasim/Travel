@@ -144,6 +144,21 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
     }
   });
 
+  const deleteActivityMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`/api/activities/${activity.id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error("Failed to delete activity");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
+      queryClient.invalidateQueries({ queryKey: ['activities'] });
+      onBack();
+    }
+  });
+
   const handleDetailChange = (field: string, value: any) => {
     setDetails(prev => ({ ...prev, [field]: value }));
     setDetailsDirty(true);
@@ -201,14 +216,28 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-      <div className="flex items-center gap-4 mb-6">
-        <Button variant="outline" onClick={onBack} className="bg-surface border-border text-white hover:bg-white/5">
-          ← Back
-        </Button>
-        <div>
-          <h2 className="text-2xl font-bold text-white">{details.name || activity.name}</h2>
-          <p className="text-text-muted">{details.category || activity.category || 'Uncategorized'}</p>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={onBack} className="bg-surface border-border text-white hover:bg-white/5">
+            ← Back
+          </Button>
+          <div>
+            <h2 className="text-2xl font-bold text-white">{details.name || activity.name}</h2>
+            <p className="text-text-muted">{details.category || activity.category || 'Uncategorized'}</p>
+          </div>
         </div>
+        <Button 
+          variant="outline" 
+          onClick={() => {
+            if (confirm('Are you sure you want to delete this activity?')) {
+              deleteActivityMutation.mutate();
+            }
+          }}
+          disabled={deleteActivityMutation.isPending}
+          className="text-danger hover:bg-danger/10 hover:text-danger border-danger/30"
+        >
+          <Trash2 className="w-4 h-4 mr-2" /> {deleteActivityMutation.isPending ? "Deleting..." : "Delete Activity"}
+        </Button>
       </div>
 
       <div className="bg-surface border border-border rounded-xl p-6">
