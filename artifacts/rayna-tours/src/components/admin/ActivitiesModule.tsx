@@ -4,6 +4,26 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Activity, Plus, Settings2, Trash2 } from 'lucide-react';
 
+import imgDesert from '@assets/generated_images/hero-desert-safari.jpg'
+import imgWater from '@assets/generated_images/water-sports-dubai.jpg'
+import imgSkydive from '@assets/generated_images/skydiving-palm.jpg'
+import imgCity from '@assets/generated_images/city-tour-dubai.jpg'
+import imgBurj from '@assets/generated_images/burj-khalifa-view.jpg'
+import imgDhow from '@assets/generated_images/hero-dhow-cruise.jpg'
+import imgTheme from '@assets/generated_images/theme-parks-dubai.jpg'
+import imgCar from '@assets/generated_images/car-rental-dubai.jpg'
+
+const imageMap: Record<string, string> = {
+  'desert-safari': imgDesert,
+  'water-activities': imgWater,
+  'skydiving': imgSkydive,
+  'city-tour': imgCity,
+  'burj-khalifa': imgBurj,
+  'dhow-cruise': imgDhow,
+  'theme-parks': imgTheme,
+  'car-rental': imgCar,
+}
+
 export default function ActivitiesModule() {
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
   
@@ -38,8 +58,8 @@ export default function ActivitiesModule() {
             onClick={() => setSelectedActivity(activity)}
           >
             <div className="aspect-video w-full bg-border/50 relative overflow-hidden">
-              {activity.coverImageUrl ? (
-                <img src={activity.coverImageUrl} alt={activity.name} className="w-full h-full object-cover" />
+              {activity.coverImageUrl || imageMap[activity.slug] ? (
+                <img src={activity.coverImageUrl || imageMap[activity.slug]} alt={activity.name} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <Activity className="w-8 h-8 text-text-muted" />
