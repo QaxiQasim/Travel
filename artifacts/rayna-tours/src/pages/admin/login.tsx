@@ -58,6 +58,7 @@ export default function AdminLogin() {
             Destination Management Control Panel. Sign in to manage activities, chauffeur matrices, and customer bookings seamlessly.
           </p>
         </div>
+      </div>
 
       {/* Right Pane - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-bg">
