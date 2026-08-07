@@ -27,11 +27,33 @@ const imageMap: Record<string, string> = {
 export default function ActivitiesModule() {
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
   
+  const queryClient = useQueryClient();
   const { data: activities, isLoading } = useQuery({
     queryKey: ['admin-activities'],
     queryFn: async () => {
       const res = await fetch('/api/activities');
       return res.json();
+    }
+  });
+
+  const createActivityMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch('/api/activities', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: "New Activity",
+          description: "Enter description here...",
+          category: "Tours",
+          packages: []
+        })
+      });
+      if (!res.ok) throw new Error("Failed to create activity");
+      return res.json();
+    },
+    onSuccess: (newActivity) => {
+      queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
+      setSelectedActivity(newActivity);
     }
   });
 
@@ -45,8 +67,12 @@ export default function ActivitiesModule() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <p className="text-text-muted">Select an activity to manage its details and pricing packages.</p>
-        <Button className="bg-primary hover:bg-primary/90 text-white">
-          <Plus className="w-4 h-4 mr-2" /> Add Activity
+        <Button 
+          className="bg-primary hover:bg-primary/90 text-white"
+          onClick={() => createActivityMutation.mutate()}
+          disabled={createActivityMutation.isPending}
+        >
+          <Plus className="w-4 h-4 mr-2" /> {createActivityMutation.isPending ? "Adding..." : "Add Activity"}
         </Button>
       </div>
       
@@ -109,6 +135,26 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
     }
   });
 
+  const createPackageMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`/api/activities/${activity.id}/packages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: "New Package",
+          price: "0",
+          description: "Package description"
+        })
+      });
+      if (!res.ok) throw new Error("Failed to create package");
+      return res.json();
+    },
+    onSuccess: (newPkg) => {
+      queryClient.invalidateQueries({ queryKey: ['admin-activities'] });
+      setPackages([...packages, newPkg]);
+    }
+  });
+
   const updatePackageLocal = (pkgId: string, field: string, value: any) => {
     setPackages(packages.map(p => p.id === pkgId ? { ...p, [field]: value, _isDirty: true } : p));
   };
@@ -133,8 +179,13 @@ function ActivityDetailView({ activity, onBack }: { activity: any, onBack: () =>
       <div className="bg-surface border border-border rounded-xl p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-lg font-semibold text-white">Pricing Packages</h3>
-          <Button size="sm" className="bg-white/10 hover:bg-white/20 text-white border border-white/10">
-            <Plus className="w-4 h-4 mr-2" /> Add Package
+          <Button 
+            size="sm" 
+            className="bg-white/10 hover:bg-white/20 text-white border border-white/10"
+            onClick={() => createPackageMutation.mutate()}
+            disabled={createPackageMutation.isPending}
+          >
+            <Plus className="w-4 h-4 mr-2" /> {createPackageMutation.isPending ? "Adding..." : "Add Package"}
           </Button>
         </div>
 
