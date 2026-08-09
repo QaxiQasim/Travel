@@ -33,6 +33,8 @@ export default function CarDetailsPage() {
   
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [travelDate, setTravelDate] = useState('')
+  const [travelTime, setTravelTime] = useState('')
   const { toast } = useToast()
 
   const mutation = useMutation({
@@ -52,6 +54,8 @@ export default function CarDetailsPage() {
       })
       setName('')
       setPhone('')
+      setTravelDate('')
+      setTravelTime('')
     },
     onError: () => {
       toast({
@@ -85,6 +89,12 @@ export default function CarDetailsPage() {
 
   const handleWhatsApp = () => {
     let message = `Hello, I am interested in booking the ${car.name}.`;
+    if (travelDate && travelTime) {
+      message += ` Date & Time: ${travelDate} at ${travelTime}.`;
+    } else if (travelDate) {
+      message += ` Date: ${travelDate}.`;
+    }
+    
     if (serviceType === 'transfer' && fromLocation && toLocation) {
       message += ` Route: ${fromLocation} to ${toLocation}. Price: AED ${displayPrice}.`;
     } else if (serviceType === 'hourly' && selectedPackage) {
@@ -119,8 +129,9 @@ export default function CarDetailsPage() {
       phone: phone,
       serviceType: 'chauffeur',
       location: locationDetails,
+      requestedDate: travelDate,
       totalPrice: displayPrice?.toString(),
-      notes: `Vehicle: ${car.name}`
+      notes: `Vehicle: ${car.name}\nTime: ${travelTime}`
     });
   }
 
@@ -305,6 +316,17 @@ export default function CarDetailsPage() {
                         </Select>
                       </div>
                     )}
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="date">Date</Label>
+                        <Input id="date" type="date" value={travelDate} onChange={e => setTravelDate(e.target.value)} required className="bg-gray-50 h-11" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="time">Time</Label>
+                        <Input id="time" type="time" value={travelTime} onChange={e => setTravelTime(e.target.value)} required className="bg-gray-50 h-11" />
+                      </div>
+                    </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="name">Full Name</Label>
