@@ -212,7 +212,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-white/50 text-sm">
-              © {new Date().getFullYear()} DONNVAY. All rights reserved.
+              © {new Date().getFullYear()} Donnvay Destination Management Company. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="text-white/50 hover:text-primary transition-colors text-sm">Privacy Policy</a>
@@ -223,14 +223,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </footer>
 
       {/* Floating WhatsApp Button */}
-      <a
-        href="https://wa.me/971524204409"
-        target="_blank"
+      <a 
+        href="https://wa.me/971551213793" 
+        target="_blank" 
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] hover:scale-110 transition-all duration-300 group"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:shadow-[#25D366]/20 transition-all duration-300 z-50 group hover:-translate-y-1"
         aria-label="Chat on WhatsApp"
       >
-        <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-75"></span>
+        <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
         <SiWhatsapp className="w-7 h-7 relative z-10" />
       </a>
     </div>

@@ -92,7 +92,7 @@ export default function CarDetailsPage() {
     } else {
       message += ` Price: AED ${displayPrice}.`;
     }
-    window.open(`https://wa.me/971524204409?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(`https://wa.me/971551213793?text=${encodeURIComponent(message)}`, '_blank');
   }
 
   const handleSubmit = (e: React.FormEvent) => {
