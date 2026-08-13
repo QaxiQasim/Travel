@@ -11,59 +11,59 @@ router.get("/", async (req: any, res: any): Promise<void> => {
     const activitiesList = await db.select().from(activitiesTable).orderBy(activitiesTable.createdAt);
     const packagesList = await db.select().from(activityPackagesTable);
 
-    if (activitiesList.length === 0) {
-      const formatted = staticActivities.map((act) => ({
-        id: String(act.id),
-        slug: act.slug,
-        name: act.title,
-        category: act.category,
-        description: act.description,
-        coverImageUrl: act.imageUrl,
-        isActive: true,
-        packages: (act.options || []).map((opt, i) => ({
-          id: `${act.slug}-pkg-${i + 1}`,
-          name: opt.name,
-          price: opt.priceAed,
-          description: opt.description
-        })),
-        title: act.title,
-        shortDescription: act.shortDescription,
-        imageUrl: act.imageUrl,
-        priceAed: act.priceAed,
-        rating: "4.8",
-        reviewCount: "124",
-        duration: act.duration,
-        inclusions: act.inclusions
-      }));
-      res.json(formatted);
-      return;
-    }
+    // Merge DB activities with staticActivities to ensure full dataset
+    const allSlugs = Array.from(new Set([
+      ...staticActivities.map((s: any) => s.slug),
+      ...activitiesList.map((a: any) => a.slug)
+    ]));
 
-    // Group packages by activity and map to frontend expected format
-    const activitiesWithPackages = activitiesList.map((activity: any) => {
-      let pkgs = packagesList.filter((p: any) => p.activityId === activity.id);
-      const staticMatch = staticActivities.find((s) => s.slug === activity.slug);
+    const activitiesWithPackages = allSlugs.map((slug) => {
+      const dbAct = activitiesList.find((a: any) => a.slug === slug);
+      const staticMatch = staticActivities.find((s: any) => s.slug === slug);
 
-      if (pkgs.length === 0 && staticMatch?.options) {
-        pkgs = staticMatch.options.map((opt, i) => ({
-          id: `${activity.id}-pkg-${i + 1}`,
-          name: opt.name,
-          price: opt.priceAed,
-          description: opt.description
-        }));
+      let pkgs: any[] = [];
+      if (dbAct) {
+        pkgs = packagesList.filter((p: any) => p.activityId === dbAct.id);
+      }
+
+      // If slug is city-tour OR pkgs is empty/outdated, force sync to 4 static packages
+      if (slug === 'city-tour' || pkgs.length === 0 || pkgs.length < (staticMatch?.options?.length || 0)) {
+        if (staticMatch?.options) {
+          pkgs = staticMatch.options.map((opt, i) => ({
+            id: `${dbAct?.id || slug}-pkg-${i + 1}`,
+            name: opt.name,
+            price: opt.priceAed,
+            description: opt.description
+          }));
+        }
       }
 
       let minPrice = 0;
       if (pkgs.length > 0) {
         minPrice = Math.min(...pkgs.map((p: any) => Number(p.price) || 0));
       }
+
+      const name = dbAct?.name || staticMatch?.title || slug;
+      const description = slug === 'city-tour'
+        ? staticMatch?.description
+        : (dbAct?.description || staticMatch?.description || "");
+      const coverImageUrl = slug === 'city-tour'
+        ? (staticMatch?.imageUrl || "/assets/generated_images/dubai-frame-tour.png")
+        : (dbAct?.coverImageUrl || staticMatch?.imageUrl || "");
+
       return {
-        ...activity,
+        id: dbAct?.id || String(staticMatch?.id || slug),
+        slug: slug,
+        name: name,
+        category: dbAct?.category || staticMatch?.category || "Tours",
+        description: description,
+        coverImageUrl: coverImageUrl,
+        isActive: dbAct ? dbAct.isActive : true,
         packages: pkgs,
         // Map fields expected by frontend
-        title: activity.name,
-        shortDescription: activity.description,
-        imageUrl: activity.coverImageUrl || staticMatch?.imageUrl || "",
+        title: name,
+        shortDescription: staticMatch?.shortDescription || description,
+        imageUrl: coverImageUrl,
         priceAed: minPrice || staticMatch?.priceAed || 200,
         rating: "4.8",
         reviewCount: "124",
