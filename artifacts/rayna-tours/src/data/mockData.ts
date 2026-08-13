@@ -392,23 +392,182 @@ export const activities: Activity[] = [
     title: "Dubai City Tour",
     category: "sightseeing",
     shortDescription: "Old meets new — a comprehensive tour of Dubai's iconic landmarks.",
-    description: "Discover Dubai's extraordinary contrasts on this comprehensive city tour. From the historic Al Fahidi neighbourhood and labyrinthine Gold Souk to the gleaming towers of Downtown and the artificial wonder of Palm Jumeirah, this tour reveals why Dubai is unlike anywhere else on earth.",
-    priceAed: 180,
-    duration: "Half day (4-5 hours) or Full day (8-9 hours)",
-    imageUrl: "",
-    galleryImages: [],
-    inclusions: ["Hotel pickup & drop-off", "Air-conditioned vehicle", "Professional English-speaking guide", "Creek Abra boat ride", "Photo stops at all major landmarks"],
+    description: "Explore both Old Dubai and modern Dubai on a thrilling city tour. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk. Marvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame and Atlantis The Palm.",
+    priceAed: 200,
+    duration: "Half day (4-5 hours) or Full day (7-8 hours)",
+    imageUrl: "/images/city-tour-dubai.jpg",
+    galleryImages: [
+      "/images/city-tour-dubai.jpg",
+      "/images/burj-khalifa-view.jpg",
+      "/images/hero-dhow-cruise.jpg",
+      "/images/water-sports-dubai.jpg",
+      "/images/hero-desert-safari.jpg"
+    ],
+    highlights: [
+      "Explore historic Al Fahidi Neighbourhood & Al Bastakiya Quarter",
+      "Traditional Abra Boat Ride across Dubai Creek",
+      "Browse world-famous Gold Souk & Spice Souk",
+      "Iconic Photo stops: Burj Al Arab, Atlantis The Palm, Museum of the Future & Dubai Frame",
+      "Visit Blue Mosque (Farooq Omar Bin Khatib Mosque)",
+      "Explore Dubai Mall, Aquarium & Fountain show area"
+    ],
+    inclusions: [
+      "Hotel pickup & drop-off (SIC sharing transfer or Private Luxury Car)",
+      "Air-conditioned vehicle with professional guide / driver",
+      "Abra ride crossing to Gold Souk & Spice Souk",
+      "Photo stops at Zabeel Palace, Dubai Frame, Burj Al Arab & Atlantis",
+      "Visit to Al Bastakiya Quarter & Old Houses",
+      "Complimentary Mineral Water"
+    ],
+    howToRedeem: [
+      "Shortly after the completion of booking, you'll receive your tour confirmation voucher in your email.",
+      "Make sure that you check your spam / junk folder or notify us in case you don't find it in your inbox.",
+      "Show this voucher on your phone or print it to redeem."
+    ],
+    importantInfo: [
+      "Please arrive at your hotel lobby 15 minutes prior to scheduled pickup time.",
+      "Modest dress code is recommended when visiting historic sites and mosques.",
+      "Entry tickets for attractions (Burj Khalifa, Dubai Frame interior, etc.) are not included unless specified."
+    ],
+    location: {
+      title: "Dubai City Center & Hotel Pickups",
+      address: "Dubai - United Arab Emirates",
+      mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.243553258813!2d55.30906231501062!3d25.26239198386629!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f433994c6ec07%3A0xe5a363f721e069c9!2sDubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s"
+    },
     options: [
-      { name: "Half-Day City Tour (Morning)", priceAed: 180, description: "Covers Old Dubai: Heritage Village, Gold Souk, Spice Souk, Creek Abra ride, Al Fahidi Fort", inclusions: ["Hotel pickup", "Guide", "Abra ride", "Photo stops"] },
-      { name: "Half-Day City Tour (Modern Dubai)", priceAed: 180, description: "Downtown, Burj Khalifa exterior, Dubai Mall, Palm Jumeirah, JBR Walk", inclusions: ["Hotel pickup", "Guide", "Photo stops"] },
-      { name: "Full-Day City Tour", priceAed: 320, description: "Complete Dubai — Old & New. Morning heritage tour + afternoon modern Dubai", inclusions: ["Hotel pickup", "All morning inclusions", "All afternoon inclusions", "Lunch at local restaurant"] },
+      {
+        name: "Dubai City Tour (Half day) SIC",
+        priceAed: 200,
+        description: "Duration: 5h | Start: 09:00 AM (TBA) | Guide: Hindi, Arabic, English, Urdu",
+        longDescription: "Explore both Old Dubai and modern Dubai city tour. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk.\n\nMarvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame And Atlantis the palm.",
+        highlights: [
+          "Ages 1 and above.",
+          "Duration: 5 hours",
+          "Start time: 09:00 AM (TBA)",
+          "Safari guide: Hindi, Arabic, English, Urdu"
+        ],
+        inclusions: [
+          "Sharing Transfer to tour departure from your hotel",
+          "Photo stops at Zabeel Palace, Dubai Frame, Burj Al Arab, Atlantis, The Palm, and The Pointe",
+          "Visit to Dubai Museum and Bastakiya and old houses",
+          "Abra Ride crossing to Gold Souk",
+          "Jumeirah Mosque / Driver Etihad Museum / Dubai Frame",
+          "Photo stop at Burj Al Arab and Jumeirah Beach and Atlantis",
+          "Passing Via Dubai Mall",
+          "Mineral Water"
+        ],
+        exclusions: [
+          "Entry Tickets for all Attractions",
+          "Private Transfers"
+        ]
+      },
+      {
+        name: "Dubai City Tour (Full day) SIC",
+        priceAed: 400,
+        description: "Duration: 7/8h | Start: 01:00 PM (TBA) | Guide: Hindi, Arabic, English, Urdu",
+        longDescription: "Explore both Old Dubai and modern Dubai city tour. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk.\n\nMarvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame And Atlantis the palm.\n\nWhether you want to explore Old Dubai, see the modern Downtown skyline, visit the famous Burj Al Arab, discover Dubai Marina or experience the city's most iconic attractions, this full-day Sharing Dubai sightseeing tour provides a convenient and comprehensive way to experience the best of Dubai along with multicultural travellers along the way.",
+        highlights: [
+          "Ages 1 and above.",
+          "Duration: 7/8 H",
+          "Start time: 1:00 PM (TBA)",
+          "Safari guide: Hindi, Arabic, English, Urdu"
+        ],
+        inclusions: [
+          "Shuttle pickup from hotel",
+          "Photo stop at Dubai Frame",
+          "Visit Al Bastakiya Quarter",
+          "Abra Ride",
+          "Visit to Gold Souq and Spice Souq",
+          "Photo stop at the Museum of the Future",
+          "Visit Farooq Omar Bin Khatib Mosque – Blue Mosque",
+          "Photo stop at Burj Al Arab",
+          "Photo stop at Zabeel Saray Hotel",
+          "Monorail ride to Atlantis, the Palm",
+          "Visit Dubai Mall, including Walking past Dubai Mall Aquarium, waterfall, and visit fountain show area",
+          "Shuttle drop-off back to hotel",
+          "Mineral Water"
+        ],
+        exclusions: [
+          "Entry Tickets for all Attractions",
+          "Private Transfers"
+        ]
+      },
+      {
+        name: "Dubai City Tour with Private Car (Half Day)",
+        priceAed: 500,
+        description: "Duration: 4/5h | Start: Customized Time (TBA) | Guide: Hindi, Arabic, English, Urdu",
+        longDescription: "Explore both Old Dubai and modern Dubai city tour with a private luxury car. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk.\n\nMarvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame And Atlantis the palm.",
+        highlights: [
+          "Ages 1 and above.",
+          "Duration: 4/5 hours",
+          "Start time: Customized Time (TBA)",
+          "Safari guide: Hindi, Arabic, English, Urdu"
+        ],
+        inclusions: [
+          "Pickup and drop-off from your Hotel accommodation",
+          "Visit to Spice Souk",
+          "Visit to Gold Souk",
+          "Visit to Dubai Creek",
+          "Dubai Museum (Optional)",
+          "Dubai Frame (Photo stop)",
+          "Visit to Jumeirah Mosque (Photo stop)",
+          "Visit to Jumeirah Beach",
+          "Burj Al Arab (Photo stop)",
+          "Madinat Jumeirah",
+          "Palm Jumeirah",
+          "Atlantis Hotel",
+          "Passing New Dubai",
+          "Dubai Marina",
+          "Burj Khalifa (Photo stop)",
+          "Dubai Mall",
+          "Za'abeel Palace (Optional)"
+        ],
+        exclusions: [
+          "Entry Tickets for Attractions",
+          "Lunch / Dinner",
+          "Additional Hour (Charges apply)"
+        ]
+      },
+      {
+        name: "Dubai City Tour with Private Car (Full Day)",
+        priceAed: 800,
+        description: "Duration: 8h | Start: 01:00 PM (TBA) | Guide: Hindi, Arabic, English, Urdu",
+        longDescription: "Visit and Explore with Private Luxury Car both Old Dubai and modern Dubai city tour. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk.\n\nMarvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame And Atlantis the palm.\n\nWhether you want to explore Old Dubai, see the modern Downtown skyline, visit the famous Burj Al Arab, discover Dubai Marina or experience the city's most iconic attractions, this full-day tour provides a convenient and comprehensive private way to experience the best of Dubai along with multicultural travellers along the way.",
+        highlights: [
+          "Ages 1 and above.",
+          "Duration: 8 Hours",
+          "Start time: 1:00 PM (TBA)",
+          "Safari guide: Hindi, Arabic, English, Urdu"
+        ],
+        inclusions: [
+          "Shuttle / Private pickup from hotel",
+          "Photo stop at Dubai Frame",
+          "Visit Al Bastakiya Quarter",
+          "Abra Ride",
+          "Visit to Gold Souq and Spice Souq",
+          "Photo stop at the Museum of the Future",
+          "Visit Farooq Omar Bin Khatib Mosque – Blue Mosque",
+          "Photo stop at Burj Al Arab",
+          "Photo stop at Zabeel Saray Hotel",
+          "Monorail ride to Atlantis, the Palm",
+          "Visit Dubai Mall, including Walking past Dubai Mall Aquarium, waterfall, and visit fountain show area",
+          "Shuttle / Private drop-off back to hotel",
+          "Mineral Water"
+        ],
+        exclusions: [
+          "Entry Tickets for all Attractions",
+          "Private Transfers (if not selected)"
+        ]
+      }
     ],
     faqs: [
-      { question: "Is the Burj Khalifa included in the city tour?", answer: "The exterior of Burj Khalifa is included as a photo stop. Entry tickets to the observation deck can be added as an upgrade (non-prime: AED 149, prime time: AED 379)." },
-      { question: "Is the tour private or shared?", answer: "We offer both shared (economy) and private tours. Private tours can be customised to your interests and pace. Please specify your preference when booking." },
+      { question: "Is the Burj Khalifa included in the city tour?", answer: "The exterior of Burj Khalifa is included as a photo stop. Entry tickets to the observation deck can be added as an upgrade." },
+      { question: "Is the tour private or shared?", answer: "We offer both shared (SIC) and private luxury car tours. Private tours allow customized pickup times and flexible itineraries." },
+      { question: "What should I wear during the city tour?", answer: "Modest, comfortable clothing is recommended. Shoulders and knees should be covered when visiting religious sites like Blue Mosque." },
+      { question: "What is included in the Abra ride?", answer: "The traditional wooden Abra boat ride across Dubai Creek to access the Gold and Spice Souks is included in all city tour packages." }
     ],
     relatedActivitySlugs: ["burj-khalifa", "dhow-cruise", "desert-safari"],
-    rating: 4.7,
+    rating: 4.8,
     reviewCount: 1087,
   },
   {

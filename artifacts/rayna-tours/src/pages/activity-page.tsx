@@ -33,7 +33,7 @@ const imageMap: Record<string, string> = {
 }
 
 import { useQuery } from '@tanstack/react-query'
-// import { activities, packages } from '@/data/mockData' // Removed mock data
+import { activities as mockActivities } from '@/data/mockData'
 
 export default function ActivityPage() {
   const params = useParams()
@@ -55,18 +55,31 @@ export default function ActivityPage() {
     }
   })
 
-  let activity = dbActivities.find((a: any) => a.slug === slug)
-  
-  if (activity) {
+  const mockActivity = mockActivities.find((a: any) => a.slug === slug)
+  const dbActivity = dbActivities.find((a: any) => a.slug === slug)
+
+  let activity = null
+
+  if (dbActivity) {
+    const dbOptions = dbActivity.packages?.map((p: any) => ({
+      id: p.id,
+      name: p.name,
+      priceAed: Number(p.price),
+      description: p.description
+    })) || []
+
+    const mergedOptions = (mockActivity?.options || []).map((mOpt: any) => {
+      const matchedDbOpt = dbOptions.find((dOpt: any) => dOpt.name === mOpt.name)
+      return matchedDbOpt ? { ...mOpt, priceAed: matchedDbOpt.priceAed, description: matchedDbOpt.description || mOpt.description } : mOpt
+    })
+
     activity = {
-      ...activity,
-      options: activity.packages?.map((p: any) => ({
-        id: p.id,
-        name: p.name,
-        priceAed: Number(p.price),
-        description: p.description
-      })) || []
+      ...mockActivity,
+      ...dbActivity,
+      options: mergedOptions.length > 0 ? mergedOptions : (dbOptions.length > 0 ? dbOptions : mockActivity?.options || [])
     }
+  } else {
+    activity = mockActivity
   }
 
   // Fallback data if API doesn't have this specific activity

@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
-import { activitiesTable, chauffeurRatesTable } from "../src/schema/index.js";
+import { activitiesTable, chauffeurVehiclesTable } from "../src/schema/index.js";
 import { activities } from "../../../artifacts/rayna-tours/src/data/mockData.js";
 import { transferRates } from "../../../artifacts/rayna-tours/src/data/transferRates.js";
 
@@ -18,20 +18,10 @@ async function seed() {
   for (const activity of activities) {
     await db.insert(activitiesTable).values({
       slug: activity.slug,
-      title: activity.title,
+      name: activity.title || activity.slug,
+      description: activity.description || activity.shortDescription,
       category: activity.category,
-      shortDescription: activity.shortDescription,
-      description: activity.description,
-      priceAed: activity.priceAed,
-      duration: activity.duration,
-      imageUrl: activity.imageUrl,
-      galleryImages: activity.galleryImages,
-      inclusions: activity.inclusions,
-      options: activity.options,
-      faqs: activity.faqs,
-      relatedActivitySlugs: activity.relatedActivitySlugs,
-      rating: activity.rating,
-      reviewCount: activity.reviewCount,
+      coverImageUrl: activity.imageUrl,
     }).onConflictDoNothing();
   }
 
@@ -107,17 +97,10 @@ async function seed() {
   // Use base rates (Dubai Airport to Deira) for DB seeding
   const baseRates = transferRates["Dubai Airport"]["Deira / Bur Dubai / Al Nahda"];
   
-  // Create full day/half day estimates if not specified (will be updatable)
-  for (const [vehicle, price] of Object.entries(baseRates)) {
-    await db.insert(chauffeurRatesTable).values({
-      vehicleName: vehicle,
-      pax: paxMap[vehicle] || 4,
-      luggage: luggageMap[vehicle] || 2,
-      transferPrice: price,
-      halfDayPrice: price * 3, // rough estimate
-      fullDayPrice: price * 6, // rough estimate
+  for (const [vehicle] of Object.entries(baseRates)) {
+    await db.insert(chauffeurVehiclesTable).values({
+      vehicleType: vehicle,
       imageUrl: imageMap[vehicle] || "/assets/lexus_es300.png",
-      type: typeMap[vehicle] || "standard",
     }).onConflictDoNothing();
   }
 

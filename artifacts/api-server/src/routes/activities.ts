@@ -11,11 +11,11 @@ router.get("/", async (req: any, res: any): Promise<void> => {
     const packagesList = await db.select().from(activityPackagesTable);
 
     // Group packages by activity and map to frontend expected format
-    const activitiesWithPackages = activitiesList.map(activity => {
-      const pkgs = packagesList.filter(p => p.activityId === activity.id);
+    const activitiesWithPackages = activitiesList.map((activity: any) => {
+      const pkgs = packagesList.filter((p: any) => p.activityId === activity.id);
       let minPrice = 0;
       if (pkgs.length > 0) {
-        minPrice = Math.min(...pkgs.map(p => Number(p.price) || 0));
+        minPrice = Math.min(...pkgs.map((p: any) => Number(p.price) || 0));
       }
       return {
         ...activity,
