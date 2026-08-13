@@ -7,7 +7,7 @@ import { Activity, Plus, Settings2, Trash2 } from 'lucide-react';
 import imgDesert from '@assets/generated_images/hero-desert-safari.jpg'
 import imgWater from '@assets/generated_images/water-sports-dubai.jpg'
 import imgSkydive from '@assets/generated_images/skydiving-palm.jpg'
-import imgCity from '@assets/generated_images/city-tour-dubai.jpg'
+import imgCityFrame from '@assets/generated_images/dubai-frame-tour.png'
 import imgBurj from '@assets/generated_images/burj-khalifa-view.jpg'
 import imgDhow from '@assets/generated_images/hero-dhow-cruise.jpg'
 import imgTheme from '@assets/generated_images/theme-parks-dubai.jpg'
@@ -17,7 +17,7 @@ const imageMap: Record<string, string> = {
   'desert-safari': imgDesert,
   'water-activities': imgWater,
   'skydiving': imgSkydive,
-  'city-tour': imgCity,
+  'city-tour': imgCityFrame,
   'burj-khalifa': imgBurj,
   'dhow-cruise': imgDhow,
   'theme-parks': imgTheme,

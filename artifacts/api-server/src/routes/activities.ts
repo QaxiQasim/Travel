@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { db, eq } from "@workspace/db";
 import { activitiesTable, activityPackagesTable } from "@workspace/db/schema";
+import { activities as staticActivities } from "../data/packages.js";
 
 const router = Router();
 
@@ -10,9 +11,48 @@ router.get("/", async (req: any, res: any): Promise<void> => {
     const activitiesList = await db.select().from(activitiesTable).orderBy(activitiesTable.createdAt);
     const packagesList = await db.select().from(activityPackagesTable);
 
+    if (activitiesList.length === 0) {
+      const formatted = staticActivities.map((act) => ({
+        id: String(act.id),
+        slug: act.slug,
+        name: act.title,
+        category: act.category,
+        description: act.description,
+        coverImageUrl: act.imageUrl,
+        isActive: true,
+        packages: (act.options || []).map((opt, i) => ({
+          id: `${act.slug}-pkg-${i + 1}`,
+          name: opt.name,
+          price: opt.priceAed,
+          description: opt.description
+        })),
+        title: act.title,
+        shortDescription: act.shortDescription,
+        imageUrl: act.imageUrl,
+        priceAed: act.priceAed,
+        rating: "4.8",
+        reviewCount: "124",
+        duration: act.duration,
+        inclusions: act.inclusions
+      }));
+      res.json(formatted);
+      return;
+    }
+
     // Group packages by activity and map to frontend expected format
     const activitiesWithPackages = activitiesList.map((activity: any) => {
-      const pkgs = packagesList.filter((p: any) => p.activityId === activity.id);
+      let pkgs = packagesList.filter((p: any) => p.activityId === activity.id);
+      const staticMatch = staticActivities.find((s) => s.slug === activity.slug);
+
+      if (pkgs.length === 0 && staticMatch?.options) {
+        pkgs = staticMatch.options.map((opt, i) => ({
+          id: `${activity.id}-pkg-${i + 1}`,
+          name: opt.name,
+          price: opt.priceAed,
+          description: opt.description
+        }));
+      }
+
       let minPrice = 0;
       if (pkgs.length > 0) {
         minPrice = Math.min(...pkgs.map((p: any) => Number(p.price) || 0));
@@ -23,12 +63,12 @@ router.get("/", async (req: any, res: any): Promise<void> => {
         // Map fields expected by frontend
         title: activity.name,
         shortDescription: activity.description,
-        imageUrl: activity.coverImageUrl,
-        priceAed: minPrice,
+        imageUrl: activity.coverImageUrl || staticMatch?.imageUrl || "",
+        priceAed: minPrice || staticMatch?.priceAed || 200,
         rating: "4.8",
         reviewCount: "124",
-        duration: "4 Hours",
-        inclusions: ["Pick & Drop", "Professional Guide", "Refreshments"]
+        duration: staticMatch?.duration || "4 Hours",
+        inclusions: staticMatch?.inclusions || ["Pick & Drop", "Professional Guide", "Refreshments"]
       };
     });
 
