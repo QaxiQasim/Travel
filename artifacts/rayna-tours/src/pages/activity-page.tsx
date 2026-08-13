@@ -21,11 +21,19 @@ import imgDhow from '@assets/generated_images/hero-dhow-cruise.jpg'
 import imgTheme from '@assets/generated_images/theme-parks-dubai.jpg'
 import imgCar from '@assets/generated_images/car-rental-dubai.jpg'
 
+import imgCityFrame from '@assets/generated_images/dubai-frame-tour.png'
+import imgCityBurjArab from '@assets/generated_images/burj-al-arab-tour.png'
+import imgCityAlFahidi from '@assets/generated_images/al-fahidi-heritage.png'
+import imgCitySouk from '@assets/generated_images/gold-spice-souk.png'
+import imgCityMuseumFuture from '@assets/generated_images/museum-future-tour.png'
+import imgCityAtlantis from '@assets/generated_images/atlantis-palm-tour.png'
+import imgCityBlueMosque from '@assets/generated_images/blue-mosque-dubai.png'
+
 const imageMap: Record<string, string> = {
   'desert-safari': imgDesert,
   'water-activities': imgWater,
   'skydiving': imgSkydive,
-  'city-tour': imgCity,
+  'city-tour': imgCityFrame,
   'burj-khalifa': imgBurj,
   'dhow-cruise': imgDhow,
   'theme-parks': imgTheme,
@@ -105,9 +113,21 @@ export default function ActivityPage() {
 
   const heroImg = imageMap[slug] || displayData.imageUrl || imgDesert
 
-  const gallery = displayData.galleryImages?.length >= 5 ? displayData.galleryImages : [
-    heroImg, imgCity, imgWater, imgSkydive, imgTheme
+  const cityTourGallery = [
+    imgCityFrame,
+    imgCityBurjArab,
+    imgCityAlFahidi,
+    imgCitySouk,
+    imgCityMuseumFuture,
+    imgCityAtlantis,
+    imgCityBlueMosque
   ]
+
+  const gallery = slug === 'city-tour'
+    ? cityTourGallery
+    : (displayData.galleryImages?.length >= 5 ? displayData.galleryImages : [
+        heroImg, imgCity, imgWater, imgSkydive, imgTheme
+      ])
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index)
@@ -350,7 +370,7 @@ export default function ActivityPage() {
             </FadeIn>
 
             {/* Location */}
-            {displayData.location && (
+            {displayData.location && slug !== 'city-tour' && (
               <FadeIn delay={0.1} className="mt-8 mb-12">
                 <h3 className="font-serif text-xl font-medium mb-4">Location</h3>
                 <div className="bg-card border border-border rounded-lg p-6">
