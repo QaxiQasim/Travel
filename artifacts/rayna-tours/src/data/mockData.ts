@@ -395,7 +395,7 @@ export const activities: Activity[] = [
     description: "Explore both Old Dubai and modern Dubai on a thrilling city tour. Begin with the historic heart of the city at Al Fahidi Historical Neighbourhood, where traditional wind-tower houses and heritage architecture reveal Dubai's roots. Continue to Dubai Creek and experience the atmosphere of the city's historic trading district, with time to explore the traditional Gold Souk and Spice Souk. Marvel at Zabeel Palace’s grandeur, admire the sail-shaped Burj Al Arab, stop at Al Qasr, and capture the magnificence of the largest-of-its-kind Dubai Frame and Atlantis The Palm.",
     priceAed: 200,
     duration: "Half day (4-5 hours) or Full day (7-8 hours)",
-    imageUrl: "/images/city-tour-dubai.jpg",
+    imageUrl: "/assets/generated_images/atlantis-palm-tour.png",
     galleryImages: [
       "/images/city-tour-dubai.jpg",
       "/images/burj-khalifa-view.jpg",

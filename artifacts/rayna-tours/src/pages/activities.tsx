@@ -16,7 +16,7 @@ import { useQuery } from '@tanstack/react-query'
 import imgDesert from '@assets/generated_images/hero-desert-safari.jpg'
 import imgWater from '@assets/generated_images/water-sports-dubai.jpg'
 import imgSkydive from '@assets/generated_images/skydiving-palm.jpg'
-import imgCity from '@assets/generated_images/city-tour-dubai.jpg'
+import imgCityAtlantis from '@assets/generated_images/atlantis-palm-tour.png'
 import imgBurj from '@assets/generated_images/burj-khalifa-view.jpg'
 import imgDhow from '@assets/generated_images/hero-dhow-cruise.jpg'
 import imgTheme from '@assets/generated_images/theme-parks-dubai.jpg'
@@ -26,7 +26,7 @@ const imageMap: Record<string, string> = {
   'desert-safari': imgDesert,
   'water-activities': imgWater,
   'skydiving': imgSkydive,
-  'city-tour': imgCity,
+  'city-tour': imgCityAtlantis,
   'burj-khalifa': imgBurj,
   'dhow-cruise': imgDhow,
   'theme-parks': imgTheme,

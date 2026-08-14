@@ -33,7 +33,7 @@ const imageMap: Record<string, string> = {
   'desert-safari': imgDesert,
   'water-activities': imgWater,
   'skydiving': imgSkydive,
-  'city-tour': imgCityFrame,
+  'city-tour': imgCityAtlantis,
   'burj-khalifa': imgBurj,
   'dhow-cruise': imgDhow,
   'theme-parks': imgTheme,
@@ -114,12 +114,12 @@ export default function ActivityPage() {
   const heroImg = imageMap[slug] || displayData.imageUrl || imgDesert
 
   const cityTourGallery = [
+    imgCityAtlantis,
     imgCityFrame,
     imgCityBurjArab,
     imgCityAlFahidi,
     imgCitySouk,
     imgCityMuseumFuture,
-    imgCityAtlantis,
     imgCityBlueMosque
   ]
 
