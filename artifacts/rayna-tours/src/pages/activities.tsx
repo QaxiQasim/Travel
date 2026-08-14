@@ -191,7 +191,7 @@ export default function ActivitiesPage() {
                       >
                         <div className="relative h-48 overflow-hidden">
                           <img 
-                            src={activity.imageUrl || imageMap[activity.slug] || heroBg} 
+                            src={activity.slug === 'city-tour' ? imageMap['city-tour'] : (activity.imageUrl || imageMap[activity.slug] || heroBg)} 
                             alt={activity.title}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                           />

@@ -85,7 +85,7 @@ export default function ActivitiesModule() {
           >
             <div className="aspect-video w-full bg-border/50 relative overflow-hidden">
               {activity.coverImageUrl || imageMap[activity.slug] ? (
-                <img src={activity.coverImageUrl || imageMap[activity.slug]} alt={activity.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <img src={activity.slug === 'city-tour' ? imageMap['city-tour'] : (activity.coverImageUrl || imageMap[activity.slug])} alt={activity.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
                   <Activity className="w-8 h-8 text-text-muted transition-transform duration-500 group-hover:scale-125 group-hover:text-primary" />
