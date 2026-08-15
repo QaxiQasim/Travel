@@ -24,22 +24,43 @@ export default function AdminLogin() {
     setError('')
     
     try {
-      // Supabase Authentication
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
+      // 1. Try Supabase Authentication
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        })
 
-      if (error) {
-        throw new Error(error.message)
+        if (data?.session) {
+          localStorage.setItem('adminToken', data.session.access_token)
+          localStorage.setItem('adminUser', JSON.stringify({ email, fullName: email.split('@')[0] }))
+          setLocation('/admin/dashboard')
+          return
+        }
+      } catch (sbErr) {
+        console.log("Supabase login skipped, falling back to API login")
       }
 
-      if (data.session) {
-        localStorage.setItem('adminToken', data.session.access_token)
+      // 2. Try API Login Endpoint
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+
+      if (!res.ok) {
+        const errData = await res.json()
+        throw new Error(errData.error || "Invalid email or password")
+      }
+
+      const authResult = await res.json()
+      if (authResult.success) {
+        localStorage.setItem('adminToken', authResult.token)
+        localStorage.setItem('adminUser', JSON.stringify(authResult.user))
         setLocation('/admin/dashboard')
       }
     } catch (err: any) {
-      setError(err.message)
+      setError(err.message || "Invalid email or password")
     } finally {
       setLoading(false)
     }
