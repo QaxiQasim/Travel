@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { db, eq, desc } from "@workspace/db";
 import { bookingsTable } from "@workspace/db/schema";
+import { activities as staticActivities } from "../data/packages.js";
 
 const router = Router();
 
@@ -21,7 +22,40 @@ router.get("/", async (req: any, res: any): Promise<void> => {
 // Create a booking
 router.post("/", async (req: any, res: any): Promise<void> => {
   try {
-    const bookingData = req.body;
+    const bookingData = { ...req.body };
+    
+    // Auto-calculate / fallback price if missing or '0'
+    if (!bookingData.totalPrice || bookingData.totalPrice === '0' || bookingData.totalPrice === 'undefined') {
+      let calculatedPrice: number | null = null;
+      const notes = bookingData.notes || '';
+      const pax = Number(bookingData.persons) || 1;
+
+      // Check package names in notes
+      if (notes.includes('Private Car (Full Day)')) calculatedPrice = 800 * pax;
+      else if (notes.includes('Private Car (Half Day)')) calculatedPrice = 500 * pax;
+      else if (notes.includes('Full day) SIC')) calculatedPrice = 400 * pax;
+      else if (notes.includes('Half day) SIC')) calculatedPrice = 200 * pax;
+      else {
+        // Search staticActivities options
+        for (const act of staticActivities) {
+          if (act.options) {
+            const matched = act.options.find((opt: any) => 
+              notes.toLowerCase().includes(opt.name.toLowerCase()) ||
+              (bookingData.location && bookingData.location.toLowerCase().includes(opt.name.toLowerCase()))
+            );
+            if (matched && matched.priceAed) {
+              calculatedPrice = Number(matched.priceAed) * pax;
+              break;
+            }
+          }
+        }
+      }
+
+      if (calculatedPrice) {
+        bookingData.totalPrice = String(calculatedPrice);
+      }
+    }
+
     const [newBooking] = await db.insert(bookingsTable)
       .values(bookingData)
       .returning();

@@ -66,6 +66,19 @@ export default function BookingsModule() {
     }
   };
 
+  const formatBookingPrice = (booking: any) => {
+    if (booking.totalPrice && Number(booking.totalPrice) > 0) {
+      return booking.totalPrice;
+    }
+    const notes = (booking.notes || '') + ' ' + (booking.location || '');
+    const pax = Number(booking.persons) || 1;
+    if (notes.includes('Private Car (Full Day)')) return (800 * pax).toString();
+    if (notes.includes('Private Car (Half Day)')) return (500 * pax).toString();
+    if (notes.includes('Full day) SIC')) return (400 * pax).toString();
+    if (notes.includes('Half day) SIC')) return (200 * pax).toString();
+    return booking.totalPrice || '0';
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6">
@@ -134,7 +147,7 @@ export default function BookingsModule() {
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className="font-semibold text-white">AED {booking.totalPrice || '0'}</span>
+                  <span className="font-semibold text-white">AED {formatBookingPrice(booking)}</span>
                 </td>
                 <td className="px-6 py-4">
                   <Select 

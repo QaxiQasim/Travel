@@ -87,11 +87,26 @@ export function BookingForm({ activityTitle, activityOrPackage, defaultDate = ''
   const isPending = mutation.isPending;
 
   const onSubmit = (data: EnquiryFormValues) => {
-    let totalPrice = undefined;
+    let totalPrice: number | undefined = undefined;
     if (packageOptions && packageOptions.length > 0) {
-      const selectedPkg = packageOptions.find(p => p.name === data.activityOrPackage);
+      // 1. Exact match
+      let selectedPkg = packageOptions.find(p => p.name === data.activityOrPackage);
+      
+      // 2. Substring match (e.g. if activityOrPackage is "Dubai City Tour - Dubai City Tour with Private Car (Full Day)")
+      if (!selectedPkg) {
+        selectedPkg = packageOptions.find(p => 
+          data.activityOrPackage.toLowerCase().includes(p.name.toLowerCase()) ||
+          p.name.toLowerCase().includes(data.activityOrPackage.toLowerCase())
+        );
+      }
+
+      // 3. Fallback if single package option exists
+      if (!selectedPkg && packageOptions.length === 1) {
+        selectedPkg = packageOptions[0];
+      }
+
       if (selectedPkg && selectedPkg.priceAed) {
-        totalPrice = selectedPkg.priceAed * data.guests;
+        totalPrice = Number(selectedPkg.priceAed) * Number(data.guests || 1);
       }
     }
 
@@ -103,7 +118,7 @@ export function BookingForm({ activityTitle, activityOrPackage, defaultDate = ''
       location: activityTitle || 'Activity Inquiry',
       persons: data.guests,
       requestedDate: data.travelDate,
-      totalPrice: totalPrice?.toString(),
+      totalPrice: totalPrice !== undefined ? totalPrice.toString() : '0',
       notes: `Package/Activity: ${data.activityOrPackage}\nMessage: ${data.message || 'None'}`
     })
   }
