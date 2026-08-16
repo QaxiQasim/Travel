@@ -31,20 +31,24 @@ ${notes}`;
 
     const ultramsgInstance = process.env.ULTRAMSG_INSTANCE_ID || "instance188631";
     const ultramsgToken = process.env.ULTRAMSG_TOKEN || "lz6ieplx7s8ylqbi";
-    const ownerPhone = (process.env.OWNER_WHATSAPP_NUMBER || "971524204409").replace(/[^0-9]/g, "");
+    const rawOwnerPhone = process.env.OWNER_WHATSAPP_NUMBER || "971524204409";
+    const ownerPhone = rawOwnerPhone.replace(/[^0-9]/g, "");
 
     const url = `https://api.ultramsg.com/${ultramsgInstance}/messages/chat`;
+    const params = new URLSearchParams({
+      token: ultramsgToken,
+      to: ownerPhone,
+      body: formattedMessage,
+    });
+
     const response = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        token: ultramsgToken,
-        to: ownerPhone,
-        body: formattedMessage,
-      }),
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
     });
     const data = await response.json();
     console.log("Ultramsg WhatsApp notification result:", data);
+    return data;
   } catch (err) {
     console.error("Failed to send WhatsApp notification via Ultramsg:", err);
   }
@@ -105,8 +109,8 @@ router.post("/", async (req: any, res: any): Promise<void> => {
       .values(bookingData)
       .returning();
       
-    // Send instant WhatsApp notification
-    sendWhatsAppNotification(newBooking).catch(console.error);
+    // Send instant WhatsApp notification and await before returning to prevent Vercel Serverless freeze
+    await sendWhatsAppNotification(newBooking);
 
     res.json(newBooking);
   } catch (error) {
