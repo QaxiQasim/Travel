@@ -54,7 +54,7 @@ serve(async (req) => {
     // Read environment variables / secrets from Supabase
     const ultramsgInstance = Deno.env.get("ULTRAMSG_INSTANCE_ID") || "instance188631";
     const ultramsgToken = Deno.env.get("ULTRAMSG_TOKEN") || "lz6ieplx7s8ylqbi";
-    const ownerWhatsApp = Deno.env.get("OWNER_WHATSAPP_NUMBER") || "";
+    const ownerWhatsApp = Deno.env.get("OWNER_WHATSAPP_NUMBER") || "+971524204409";
     
     const resendApiKey = Deno.env.get("RESEND_API_KEY") || "";
     const senderEmail = Deno.env.get("SENDER_EMAIL") || "onboarding@resend.dev";
