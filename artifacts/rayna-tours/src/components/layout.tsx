@@ -193,7 +193,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-white/70 text-sm">
                   <Phone className="w-5 h-5 text-primary shrink-0" />
-                  <span>+971-4-XXX-XXXX<br/>Mon-Sun: 9:00 AM - 9:00 PM</span>
+                  <span>+971 55 121 3793<br/>Mon-Sun: 9:00 AM - 9:00 PM</span>
                 </li>
                 <li className="flex items-start gap-3 text-white/70 text-sm">
                   <Mail className="w-5 h-5 text-primary shrink-0" />

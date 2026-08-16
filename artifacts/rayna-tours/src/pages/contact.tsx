@@ -81,7 +81,7 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Email</h4>
                     <p className="text-sm text-muted-foreground mb-1">info@donnvay.com</p>
-                    <p className="text-sm text-muted-foreground">bookings@donnvay.com</p>
+                    <p className="text-sm text-muted-foreground">info@donnvay.com</p>
                   </div>
                 </div>
 
