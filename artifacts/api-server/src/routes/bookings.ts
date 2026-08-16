@@ -5,6 +5,51 @@ import { activities as staticActivities } from "../data/packages.js";
 
 const router = Router();
 
+async function sendWhatsAppNotification(booking: any) {
+  try {
+    const customerName = booking.customerName || "N/A";
+    const email = booking.email || "N/A";
+    const phone = booking.phone || "N/A";
+    const location = booking.location || "N/A";
+    const persons = booking.persons || 1;
+    const requestedDate = booking.requestedDate || "N/A";
+    const totalPrice = booking.totalPrice || "0";
+    const notes = booking.notes || "None";
+
+    const formattedMessage = `🔔 Nayi Booking Aayi Hai!
+
+👤 Naam: ${customerName}
+📍 Activity/Location: ${location}
+📅 Date: ${requestedDate}
+👥 Persons: ${persons}
+📞 Phone: ${phone}
+✉️ Email: ${email}
+💰 Total Price: AED ${totalPrice}
+
+📋 Notes:
+${notes}`;
+
+    const ultramsgInstance = process.env.ULTRAMSG_INSTANCE_ID || "instance188631";
+    const ultramsgToken = process.env.ULTRAMSG_TOKEN || "lz6ieplx7s8ylqbi";
+    const ownerPhone = (process.env.OWNER_WHATSAPP_NUMBER || "971524204409").replace(/[^0-9]/g, "");
+
+    const url = `https://api.ultramsg.com/${ultramsgInstance}/messages/chat`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        token: ultramsgToken,
+        to: ownerPhone,
+        body: formattedMessage,
+      }),
+    });
+    const data = await response.json();
+    console.log("Ultramsg WhatsApp notification result:", data);
+  } catch (err) {
+    console.error("Failed to send WhatsApp notification via Ultramsg:", err);
+  }
+}
+
 // Get all bookings
 router.get("/", async (req: any, res: any): Promise<void> => {
   try {
@@ -60,6 +105,9 @@ router.post("/", async (req: any, res: any): Promise<void> => {
       .values(bookingData)
       .returning();
       
+    // Send instant WhatsApp notification
+    sendWhatsAppNotification(newBooking).catch(console.error);
+
     res.json(newBooking);
   } catch (error) {
     console.error("Error creating booking:", error);
