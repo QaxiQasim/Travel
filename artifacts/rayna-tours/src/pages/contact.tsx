@@ -56,9 +56,21 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Dubai Office</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      ACICO Business Park Building,<br />
-                      Office # X, Port Saeed Road,<br />
-                      Deira, Dubai, UAE
+                      M4 Al Owais Building,<br />
+                      Al Khabaisi, Dubai, UAE
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Ras Al Khaimah Office</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      RAK 6267 Compass Building,<br />
+                      Ras Al Khaimah, UAE
                     </p>
                   </div>
                 </div>

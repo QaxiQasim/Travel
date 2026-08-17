@@ -200,11 +200,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <span>info@donnvay.com</span>
                 </li>
                 <li className="flex items-start gap-3 text-white/70 text-sm">
-                  <svg className="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>ACICO Business Park Building,<br/>Office # X, Port Saeed Road,<br/>Deira, Dubai, UAE</span>
+                  <div>
+                    <span className="font-semibold text-white block">Dubai Office:</span>
+                    <span>M4 Al Owais Building, Al Khabaisi,<br/>Dubai, UAE</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3 text-white/70 text-sm">
+                  <svg className="w-5 h-5 text-primary shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <div>
+                    <span className="font-semibold text-white block">RAK Office:</span>
+                    <span>RAK 6267 Compass Building,<br/>Ras Al Khaimah, UAE</span>
+                  </div>
                 </li>
               </ul>
             </div>
