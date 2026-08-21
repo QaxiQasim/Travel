@@ -279,7 +279,7 @@ export default function CarDetailsPage() {
                             <SelectTrigger className="w-full bg-gray-50 h-11">
                               <SelectValue placeholder="Select From" />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="max-h-64 overflow-y-auto z-[100]">
                               {fromLocations.map(loc => (
                                 <SelectItem key={loc} value={loc}>{loc}</SelectItem>
                               ))}
@@ -293,7 +293,7 @@ export default function CarDetailsPage() {
                             <SelectTrigger className="w-full bg-gray-50 h-11">
                               <SelectValue placeholder="Select To" />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="max-h-64 overflow-y-auto z-[100]">
                               {fromLocation && transferRates[fromLocation] ? Object.keys(transferRates[fromLocation]).map(loc => (
                                 <SelectItem key={loc} value={loc}>{loc}</SelectItem>
                               )) : <SelectItem value="none" disabled>Select pick-up first</SelectItem>}
@@ -308,7 +308,7 @@ export default function CarDetailsPage() {
                           <SelectTrigger className="w-full bg-gray-50 h-11">
                             <SelectValue placeholder="Select Package" />
                           </SelectTrigger>
-                          <SelectContent>
+                          <SelectContent className="max-h-64 overflow-y-auto z-[100]">
                             {hourlyPackages.map(pkg => (
                               <SelectItem key={pkg} value={pkg}>{pkg}</SelectItem>
                             ))}

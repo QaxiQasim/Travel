@@ -151,7 +151,7 @@ export default function ChauffeurPage() {
                     <SelectTrigger className="w-full h-12 bg-transparent border-0 shadow-none focus:ring-0 text-gray-600 font-medium px-0 hover:bg-gray-50/50 transition-colors rounded-lg">
                       <SelectValue placeholder="Pick-up location" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl shadow-xl border-0">
+                    <SelectContent className="rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto bg-white z-[100]">
                       {fromLocations.map(loc => (
                         <SelectItem key={loc} value={loc} className="rounded-lg my-1 cursor-pointer">{loc}</SelectItem>
                       ))}
@@ -167,7 +167,7 @@ export default function ChauffeurPage() {
                     <SelectTrigger className="w-full h-12 bg-transparent border-0 shadow-none focus:ring-0 text-gray-600 font-medium px-0 hover:bg-gray-50/50 transition-colors rounded-lg">
                       <SelectValue placeholder="Drop-off location" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl shadow-xl border-0">
+                    <SelectContent className="rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto bg-white z-[100]">
                       {fromLocation && transferRates[fromLocation] ? Object.keys(transferRates[fromLocation]).map(loc => (
                         <SelectItem key={loc} value={loc} className="rounded-lg my-1 cursor-pointer">{loc}</SelectItem>
                       )) : <SelectItem value="none" disabled>Select pick-up first</SelectItem>}
@@ -184,7 +184,7 @@ export default function ChauffeurPage() {
                   <SelectTrigger className="w-full h-12 bg-transparent border-0 shadow-none focus:ring-0 text-gray-600 font-medium px-0 hover:bg-gray-50/50 transition-colors rounded-lg">
                     <SelectValue placeholder="Select package" />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl shadow-xl border-0">
+                  <SelectContent className="rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto bg-white z-[100]">
                     {hourlyPackages.map(pkg => (
                       <SelectItem key={pkg} value={pkg} className="rounded-lg my-1 cursor-pointer">{pkg}</SelectItem>
                     ))}
@@ -201,7 +201,7 @@ export default function ChauffeurPage() {
                 <SelectTrigger className="w-full h-12 bg-transparent border-0 shadow-none focus:ring-0 text-gray-600 font-medium px-0 hover:bg-gray-50/50 transition-colors rounded-lg">
                   <SelectValue placeholder="All Models" />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl shadow-xl border-0">
+                <SelectContent className="rounded-xl shadow-2xl border border-gray-200 max-h-64 overflow-y-auto bg-white z-[100]">
                   <SelectItem value="all" className="rounded-lg my-1 cursor-pointer">All Models</SelectItem>
                   {Array.from(new Set(chauffeurCars.map(car => car.name))).map(carName => (
                     <SelectItem key={carName} value={carName} className="rounded-lg my-1 cursor-pointer">{carName}</SelectItem>
