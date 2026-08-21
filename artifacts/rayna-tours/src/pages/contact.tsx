@@ -160,12 +160,28 @@ export default function ContactPage() {
         </div>
       </div>
       
-      {/* Map Placeholder */}
-      <div className="w-full h-[400px] bg-muted relative">
-        <div className="absolute inset-0 flex items-center justify-center flex-col text-muted-foreground">
-          <MapPin className="w-12 h-12 mb-4 opacity-50" />
-          <p className="font-medium">Interactive Map Placeholder</p>
-          <p className="text-sm">Deira, Dubai</p>
+      {/* Dubai Office Location Map */}
+      <div className="container mx-auto px-4 pb-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-6 flex items-center gap-3">
+            <MapPin className="w-6 h-6 text-primary" />
+            <div>
+              <h3 className="font-serif text-2xl font-medium">Dubai Office Location</h3>
+              <p className="text-sm text-muted-foreground">M4 Al Owais Building, Al Khabaisi, Dubai, UAE</p>
+            </div>
+          </div>
+          <div className="w-full h-[450px] rounded-2xl overflow-hidden border border-border shadow-lg relative bg-muted">
+            <iframe 
+              src="https://maps.google.com/maps?q=Al+Owais+Building,+Al+Khabaisi,+Dubai,+UAE&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              width="100%" 
+              height="100%" 
+              style={{ border: 0 }} 
+              allowFullScreen={true} 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Dubai Office Location Map - Al Owais Building"
+            ></iframe>
+          </div>
         </div>
       </div>
     </Layout>
