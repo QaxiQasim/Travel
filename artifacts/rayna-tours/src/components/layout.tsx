@@ -28,7 +28,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     { name: 'Dubai Holidays', href: '/dubai-holidays' },
     { name: 'Activities', href: '/activities' },
     { name: 'Chauffeur Services', href: '/chauffeur-services' },
-    { name: 'Car Rental', href: '/car-rental' },
     { name: 'About Us', href: '/about' },
     { name: 'Gallery', href: '/gallery' },
     { name: 'Contact Us', href: '/contact' },
