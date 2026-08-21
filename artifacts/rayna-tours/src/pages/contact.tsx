@@ -81,8 +81,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Phone</h4>
-                    <p className="text-sm text-muted-foreground mb-1">+971 55 121 3793</p>
-                    <p className="text-sm text-muted-foreground">+971 55 121 3793 (WhatsApp)</p>
+                    <p className="text-sm text-muted-foreground">+971 55 121 3793 (Phone & WhatsApp)</p>
                   </div>
                 </div>
 
@@ -92,7 +91,6 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-medium text-foreground mb-2 font-serif text-lg">Email</h4>
-                    <p className="text-sm text-muted-foreground mb-1">info@donnvay.com</p>
                     <p className="text-sm text-muted-foreground">info@donnvay.com</p>
                   </div>
                 </div>
