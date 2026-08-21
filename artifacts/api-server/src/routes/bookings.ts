@@ -7,13 +7,13 @@ const router = Router();
 
 async function sendWhatsAppNotification(booking: any) {
   try {
-    const customerName = booking.customerName || "N/A";
+    const customerName = booking.customerName || booking.customer_name || "N/A";
     const email = booking.email || "N/A";
     const phone = booking.phone || "N/A";
     const location = booking.location || "N/A";
     const persons = booking.persons || 1;
-    const requestedDate = booking.requestedDate || "N/A";
-    const totalPrice = booking.totalPrice || "0";
+    const requestedDate = booking.requestedDate || booking.requested_date || "N/A";
+    const totalPrice = booking.totalPrice || booking.total_price || "0";
     const notes = booking.notes || "None";
 
     const formattedMessage = `🔔 Nayi Booking Aayi Hai!
@@ -47,7 +47,11 @@ ${notes}`;
       body: params,
     });
     const data = await response.json();
-    console.log("Ultramsg WhatsApp notification result:", data);
+    if (data && data.error) {
+      console.error("Ultramsg API Error:", data.error);
+    } else {
+      console.log("Ultramsg WhatsApp notification result:", data);
+    }
     return data;
   } catch (err) {
     console.error("Failed to send WhatsApp notification via Ultramsg:", err);
